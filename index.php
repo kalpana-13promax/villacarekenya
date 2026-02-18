@@ -27,10 +27,9 @@
 <div class="row g-4">
 
 <div class="col-md-6">
-
 <div data-aos="fade-up">
-<a href="property-details.php?id=101" class="dev-card large">
-<img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1400&auto=format&fit=crop" alt="Lavington family villa">
+<a href="property-details.php?id=10" class="dev-card large">
+<img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop" alt="Lavington family villa">
 <div class="dev-label">PROPERTY</div>
 </a>
 <div class="dev-caption">LAVINGTON | FAMILY VILLA</div>
@@ -38,8 +37,8 @@
 </div>
 
 <div class="mt-4" data-aos="fade-up" data-aos-delay="150">
-<a href="property-details.php?id=102" class="dev-card small">
-<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1400&auto=format&fit=crop" alt="Kilimani apartment">
+<a href="property-details.php?id=9" class="dev-card small">
+<img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop" alt="Kilimani apartment">
 <div class="dev-label">PROPERTY</div>
 </a>
 <div class="dev-caption">KILIMANI | CONTEMPORARY APARTMENTS</div>
@@ -51,8 +50,8 @@
 <div class="col-md-6">
 
 <div data-aos="fade-up" data-aos-delay="75">
-<a href="property-details.php?id=103" class="dev-card medium">
-<img src="https://images.unsplash.com/photo-1505691723518-36a66b0f5a1d?q=80&w=1400&auto=format&fit=crop" alt="Brookside residence">
+<a href="property-details.php?id=8" class="dev-card medium">
+<img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop" alt="Brookside residence">
 <div class="dev-label">PROPERTY</div>
 </a>
 <div class="dev-caption">BROOKSIDE | URBAN RESIDENCES</div>
@@ -60,8 +59,8 @@
 </div>
 
 <div class="mt-4" data-aos="fade-up" data-aos-delay="225">
-<a href="property-details.php?id=104" class="dev-card medium">
-<img src="https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1400&auto=format&fit=crop" alt="Upperhill tower">
+<a href="property-details.php?id=7" class="dev-card medium">
+<img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop" alt="Upperhill tower">
 <div class="dev-label">PROPERTY</div>
 </a>
 <div class="dev-caption">UPPERHILL | EXECUTIVE TOWERS</div>

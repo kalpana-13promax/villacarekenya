@@ -304,8 +304,9 @@
                     </div>
                 </div>
             </div>
-
+            
             <!-- Properties Grid -->
+            <?php include __DIR__ . '/../config/properties.php'; ?>
             <div class="row g-4 g-lg-5">
                 <!-- CARD 1: Lavington Family Villa -->
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
@@ -318,7 +319,7 @@
                             <h3>Lavington Family Villa</h3>
                             <p>Spacious 4-bedroom family villa in Lavington with landscaped garden, secure compound
                                 and contemporary finishes. Ideal for families seeking privacy and convenience.</p>
-                            <a href="property-details.php?id=1" class="feature-btn">VIEW DETAILS</a>
+                            <a href="property.php" class="feature-btn">VIEW All LIST</a>
                         </div>
                     </div>
                 </div>
@@ -330,11 +331,11 @@
                             <div class="collage-grid">
                                 <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80"
                                     alt="Nairobi apartment interior" loading="lazy">
-                                <img src="https://images.unsplash.com/photo-1505691723518-36a66b0f5a1d?auto=format&fit=crop&w=800&q=80"
+                                <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop"
                                     alt="modern apartment" loading="lazy">
                                 <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80"
                                     alt="city skyline" loading="lazy">
-                                <img src="https://images.unsplash.com/photo-1572120360610-d971b9b20021?auto=format&fit=crop&w=800&q=80"
+                                <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop"
                                     alt="living area" loading="lazy">
                             </div>
                         </div>
@@ -347,21 +348,35 @@
                     </div>
                 </div>
 
-                <!-- CARD 3: Coastal Holiday Home -->
+                <!-- CARD 3: Beachfront Property (dynamic from config -> ID 10) -->
+                <?php if (isset($properties[10])): $bp = $properties[10]; ?>
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="300">
                     <div class="feature-card">
                         <div class="feature-img">
-                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
-                                alt="Diani beachfront home" loading="lazy">
+                            <img src="<?php echo htmlspecialchars(!empty($bp['gallery'][0]) ? $bp['gallery'][0] : $bp['featured_image']); ?>" alt="<?php echo htmlspecialchars($bp['title']); ?>" loading="lazy">
+                        </div>
+                        <div class="feature-content">
+                            <h3><?php echo htmlspecialchars($bp['title']); ?></h3>
+                            <p><?php echo htmlspecialchars($bp['description']); ?></p>
+                            <a href="property-details.php?id=<?php echo $bp['id']; ?>" class="feature-btn">VIEW DETAILS</a>
+                        </div>
+                    </div>
+                </div>
+                <?php else: ?>
+                <!-- Fallback: original static coastal card -->
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="300">
+                    <div class="feature-card">
+                        <div class="feature-img">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" alt="Diani beachfront home" loading="lazy">
                         </div>
                         <div class="feature-content">
                             <h3>Coastal Holiday Home — Diani</h3>
-                            <p>Beachfront 3-bedroom duplex in Diani Beach with direct access to the shore — perfect
-                                for holiday rentals or a private coastal retreat.</p>
+                            <p>Beachfront 3-bedroom duplex in Diani Beach with direct access to the shore — perfect for holiday rentals or a private coastal retreat.</p>
                             <a href="contact.php?ref=diani" class="feature-btn">ENQUIRE NOW</a>
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
 
             <!-- Subtle bottom line -->

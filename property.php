@@ -13,7 +13,20 @@
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<?php include 'layout/link.php'; ?>
+<?php 
+include 'config/properties.php';
+
+// Page-level SEO
+$meta_title = 'Premium Property Listings | VillaCare Kenya';
+$meta_description = 'Browse selected premium properties for sale and rent from VillaCare Kenya.';
+$meta_keywords = 'properties, real estate, villas, apartments, for sale, for rent, VillaCare';
+$og_title = $meta_title;
+$og_description = $meta_description;
+$og_image = isset($properties[1]) ? $properties[1]['featured_image'] : '';
+
+include 'layout/link.php'; 
+?>
+    
 </head>
 
 <body>
@@ -37,40 +50,41 @@
 <section class="plx-wrapper">
     <div class="container">
 
-        <!-- PROPERTY 1 - ENAKI -->
-        <div class="row align-items-center plx-row" data-aos="fade-up" data-aos-duration="1000">
-            <div class="col-lg-5 mb-4" data-aos="fade-right" data-aos-delay="200">
+        <?php 
+        $count = 0;
+        foreach (array_slice($properties, 0, 5) as $property): 
+            $count++;
+            $carouselId = 'plxSlider' . $count;
+            $isEven = $count % 2 == 0;
+            $delay = $count > 1 ? 200 : 0;
+        ?>
+
+        <!-- PROPERTY LISTING -->
+        <div class="row align-items-center plx-row" data-aos="fade-up" data-aos-duration="1000" <?php if($delay) echo "data-aos-delay=\"$delay\""; ?>>
+            <div class="col-lg-5 mb-4" data-aos="fade-<?php echo $isEven ? 'left' : 'right'; ?>" data-aos-delay="<?php echo 200 + ($count-1)*100; ?>">
                 <div class="plx-image-box">
-                    <span class="plx-badge"><i class="bi bi-star-fill me-2"></i>NOW LETTING</span>
+                    <span class="plx-badge"><i class="bi bi-star-fill me-2"></i><?php echo htmlspecialchars($property['badge']); ?></span>
                     
-                    <div id="plxSliderOne" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                    <div id="<?php echo $carouselId; ?>" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#plxSliderOne" data-bs-slide-to="0" class="active"></button>
-                            <button type="button" data-bs-target="#plxSliderOne" data-bs-slide-to="1"></button>
-                            <button type="button" data-bs-target="#plxSliderOne" data-bs-slide-to="2"></button>
-                            <button type="button" data-bs-target="#plxSliderOne" data-bs-slide-to="3"></button>
+                            <?php foreach ($property['gallery'] as $idx => $image): ?>
+                            <button type="button" data-bs-target="#<?php echo $carouselId; ?>" data-bs-slide-to="<?php echo $idx; ?>" <?php echo $idx === 0 ? 'class="active"' : ''; ?>></button>
+                            <?php endforeach; ?>
                         </div>
                         
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="Enaki 1">
+                            <?php foreach ($property['gallery'] as $idx => $image): ?>
+                            <div class="carousel-item <?php echo $idx === 0 ? 'active' : ''; ?>">
+                                <img src="<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($property['title']); ?>">
                             </div>
-                            <div class="carousel-item">
-                                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop" alt="Enaki 2">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=1200&auto=format&fit=crop" alt="Enaki 3">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop" alt="Enaki 4">
-                            </div>
+                            <?php endforeach; ?>
                         </div>
 
-                        <button class="carousel-control-prev" type="button" data-bs-target="#plxSliderOne" data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#<?php echo $carouselId; ?>" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#plxSliderOne" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#<?php echo $carouselId; ?>" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
@@ -78,88 +92,33 @@
                 </div>
             </div>
 
-            <div class="col-lg-7" data-aos="fade-left" data-aos-delay="300">
+            <div class="col-lg-7" data-aos="fade-<?php echo $isEven ? 'right' : 'left'; ?>" data-aos-delay="<?php echo 300 + ($count-1)*100; ?>">
                 <h6 class="plx-heading">
-                    ENAKI | 1, 2, 3 & 4 BEDROOM APARTMENTS
+                    <?php echo htmlspecialchars($property['title']); ?>
                 </h6>
 
                 <div class="plx-meta">
-                    <div><span>TYPE</span> <i class="bi bi-house me-2" style="color: #d4a85f;"></i> Unfurnished & Furnished</div>
-                    <div><span>PRICE</span> <i class="bi bi-cash-stack me-2" style="color: #d4a85f;"></i> From KSh.100,000/month</div>
-                    <div><span>LOCATION</span> <i class="bi bi-geo-alt me-2" style="color: #d4a85f;"></i> Nyari, Gigiri</div>
+                    <div><span>TYPE</span> <i class="bi bi-house me-2" style="color: #d4a85f;"></i> <?php echo htmlspecialchars($property['type']); ?></div>
+                    <div><span>PRICE</span> <i class="bi bi-cash-stack me-2" style="color: #d4a85f;"></i> <?php echo htmlspecialchars($property['price_display']); ?></div>
+                    <div><span>LOCATION</span> <i class="bi bi-geo-alt me-2" style="color: #d4a85f;"></i> <?php echo htmlspecialchars($property['location']); ?></div>
                 </div>
 
                 <p class="plx-text">
-                    Enaki is the epitome of resort-style living. Experience a seamless journey with top-notch hospitality, convenient amenities, and diverse resident experiences, all meticulously designed for your comfort and well-being.
+                    <?php echo htmlspecialchars($property['description']); ?>
                 </p>
 
-                <a href="#" class="plx-btn"><i class="bi bi-eye me-2"></i> VIEW LISTING</a>
-            </div>
-        </div>
-
-
-        <!-- PROPERTY 2 - RIVERSIDE -->
-        <div class="row align-items-center" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-            <div class="col-lg-5 mb-4" data-aos="fade-right" data-aos-delay="400">
-                <div class="plx-image-box">
-                    <span class="plx-badge"><i class="bi bi-star-fill me-2"></i>NOW LETTING</span>
-                    
-                    <div id="plxSliderTwo" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#plxSliderTwo" data-bs-slide-to="0" class="active"></button>
-                            <button type="button" data-bs-target="#plxSliderTwo" data-bs-slide-to="1"></button>
-                            <button type="button" data-bs-target="#plxSliderTwo" data-bs-slide-to="2"></button>
-                            <button type="button" data-bs-target="#plxSliderTwo" data-bs-slide-to="3"></button>
-                        </div>
-                        
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=1200&auto=format&fit=crop" alt="Riverside 1">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498e?q=80&w=1200&auto=format&fit=crop" alt="Riverside 2">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=1200&auto=format&fit=crop" alt="Riverside 3">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="Riverside 4">
-                            </div>
-                        </div>
-
-                        <button class="carousel-control-prev" type="button" data-bs-target="#plxSliderTwo" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#plxSliderTwo" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-7" data-aos="fade-left" data-aos-delay="500">
-                <h6 class="plx-heading">
-                    RIVERSIDE DRIVE | 1, 2 & 3 BEDROOM APARTMENTS
-                </h6>
-
-                <div class="plx-meta">
-                    <div><span>TYPE</span> <i class="bi bi-house me-2" style="color: #d4a85f;"></i> Unfurnished & Furnished</div>
-                    <div><span>PRICE</span> <i class="bi bi-cash-stack me-2" style="color: #d4a85f;"></i> From KSh.110,000/month</div>
-                    <div><span>LOCATION</span> <i class="bi bi-geo-alt me-2" style="color: #d4a85f;"></i> Riverside Drive</div>
-                </div>
-
-                <p class="plx-text">
-                    An unprecedented concept set to transform Riverside Drive. Riverside Square is a mixed-use marvel that brings together shopping, working, living and leisure in a seamless interplay of creative spaces.
-                </p>
-
+                <?php if($count % 2 == 0): ?>
                 <div class="mt-3">
-                    <a href="#" class="plx-btn me-3"><i class="bi bi-chat-dots me-2"></i> ENQUIRE</a>
-                    <a href="#" class="plx-btn"><i class="bi bi-eye me-2"></i> VIEW LISTING</a>
+                    <a href="contact.php" class="plx-btn me-3"><i class="bi bi-chat-dots me-2"></i> ENQUIRE</a>
+                    <a href="property-details.php?id=<?php echo $property['id']; ?>" class="plx-btn"><i class="bi bi-eye me-2"></i> VIEW DETAILS</a>
                 </div>
+                <?php else: ?>
+                <a href="property-details.php?id=<?php echo $property['id']; ?>" class="plx-btn"><i class="bi bi-eye me-2"></i> VIEW DETAILS</a>
+                <?php endif; ?>
             </div>
         </div>
+
+        <?php endforeach; ?>
 
     </div>
 </section>

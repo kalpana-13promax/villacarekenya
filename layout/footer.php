@@ -7,14 +7,16 @@
             <div class="col-lg-4 col-md-6">
                 <h5 class="footer-title">VILLACARE REAL ESTATE</h5>
                 <p>
-                    Diani Beach Road<br>
-                    P.O Box 2456 - 80401<br>
-                    Diani, Kenya<br><br>
-                    +254 712 345 678
+                    <i class="bi bi-geo-alt"></i>
+                    New Rehema House,6th Floor, Rhapta Road<br>
+                    Westlands Nairobi, Kenya<br><br>
+                    <i class="bi bi-telephone"></i>
+                    +254 712 325 902
                 </p>
 
                 <p class="footer-email">
-                    hello@villacarekenya.com
+                    <i class="bi bi-envelope"></i>
+                    info@villacarekenya.com
                 </p>
             </div>
 
@@ -26,7 +28,7 @@
                     <li><a href="about.php">About Us</a></li>
                     <li><a href="services.php">Our Services</a></li>
                     <li><a href="#">Careers</a></li>
-                    <li><a href="blog.php">Insights</a></li>
+                    <li><a href="blog.php">Blog</a></li>
                     <li><a href="contact.php">Contact</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                 </ul>
@@ -73,3 +75,7 @@
         </div>
     </div>
 </footer>
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/254712325902?text=Hello%20Villacare" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+</a>

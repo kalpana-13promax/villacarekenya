@@ -225,48 +225,6 @@
         .vc-quick-links a:hover {
             color: #d4a85f;
         }
-
-        /* Responsive */
-        @media (max-width: 576px) {
-            .vc-404-box {
-                padding: 40px 20px;
-            }
-            
-            .vc-404-number {
-                font-size: 80px;
-            }
-            
-            .vc-404-title {
-                font-size: 24px;
-            }
-            
-            .vc-404-text {
-                font-size: 14px;
-            }
-            
-            .vc-404-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 35px;
-            }
-            
-            .vc-404-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .vc-btn-primary,
-            .vc-btn-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .vc-quick-links {
-                flex-direction: column;
-                gap: 10px;
-                align-items: center;
-            }
-        }
     </style>
 </head>
 <body>

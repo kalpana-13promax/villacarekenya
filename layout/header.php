@@ -7,9 +7,9 @@
 <div class="top-bar">
     <div class="container d-flex justify-content-between align-items-center flex-wrap">
         <div class="contact-info">
-            <span><i class="fa-solid fa-phone"></i> +91 98765 43210</span>
-            <span><i class="fa-solid fa-envelope"></i> info@villacare.com</span>
-            <span><i class="fa-solid fa-location-dot"></i> Mumbai, India</span>
+            <span><a href="tel:+254721325902" style="text-decoration: none; color: #fff;"><i class="fa-solid fa-phone"></i> +254 721 325 902</a></span>
+            <span><a href="mailto:info@villacarekenya.com" style="text-decoration: none; color: #fff;"><i class="fa-solid fa-envelope"></i> info@villacarekenya.com</a></span>
+            <span><i class="fa-solid fa-location-dot"></i> Nairobi, Kenya</span>
         </div>
 
         <div class="social-icons">

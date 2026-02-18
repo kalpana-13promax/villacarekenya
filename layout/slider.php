@@ -11,17 +11,16 @@
                 <div class="overlay"></div>
                 <div class="hero-content">
                     <h1 class="main-title" data-aos="fade-up">
-                        <span class="gold">35</span>
-                        <span class="white-text">YEAR<br>LEGACY</span>
+                        <span class="gold">Villacare</span>
+                        <span class="white-text">THE BEST PLACE TO FIND YOUR HOME</span>
                     </h1>
 
-                    <div class="est-line" data-aos="fade-up" data-aos-delay="200">
+                    <!-- <div class="est-line" data-aos="fade-up" data-aos-delay="200">
                         <span></span> EST 1991
-                    </div>
+                    </div> -->
 
                     <p class="hero-desc" data-aos="fade-up" data-aos-delay="400">
-                        Driving lifestyle transformation and wealth creation through innovative real estate solutions,
-                        data-driven developments, and transparent property services.
+                        BellCrest Gardens For Sale in Kileleshwa starting form Ksh.14,500,000,00.
                     </p>
                 </div>
             </div>
@@ -34,11 +33,11 @@
                 <div class="overlay"></div>
                 <div class="hero-content">
                     <h1 class="main-title" data-aos="fade-up">
-                        <span class="gold">Premium</span>
-                        <span class="white-text">Developments</span>
+                        <span class="gold">3 Bedroom</span>
+                        <span class="white-text">STUNNING 3 BEDROOM MODERN APARTMENT</span>
                     </h1>
                     <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">
-                        Explore our portfolio of luxury residences and commercial spaces designed for modern living.
+                        Brooklyn Springs, For Sale in Kileleshwa. Ksh. 17,950,000.00.
                     </p>
                 </div>
             </div>
@@ -51,11 +50,11 @@
                 <div class="overlay"></div>
                 <div class="hero-content">
                     <h1 class="main-title" data-aos="fade-up">
-                        <span class="gold">Smart</span>
-                        <span class="white-text">Investments</span>
+                        <span class="gold">4 Bedroom</span>
+                        <span class="white-text">4 BEDROOM TOWNHOUSES FOR SALE</span>
                     </h1>
                     <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">
-                        Data-driven insights and market intelligence for maximum returns on your property investments.
+                        Kitisuru Terrace, For Sale in Kitisuru. Ksh. 45,000,000.00.
                     </p>
                 </div>
             </div>
@@ -68,15 +67,33 @@
                 <div class="overlay"></div>
                 <div class="hero-content">
                     <h1 class="main-title" data-aos="fade-up">
-                        <span class="gold">Luxury</span>
-                        <span class="white-text">Living</span>
+                        <span class="gold">Office</span>
+                        <span class="white-text">OFFICE BLOCK TO LET</span>
                     </h1>
                     <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">
-                        Experience unparalleled comfort in our exclusive villa communities across prime locations.
+                        Office space available, To Let along North Airport Road, Ksh.80 Per Sq.ft. 
                     </p>
                 </div>
             </div>
         </div>
+
+
+        <div class="carousel-item">
+            <div class="hero-slide"
+                style="background-image:url('https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop');">
+                <div class="overlay"></div>
+                <div class="hero-content">
+                    <h1 class="main-title" data-aos="fade-up">
+                        <span class="gold">Apartments</span>
+                        <span class="white-text">Affordable 2 & 3br. apartments for sale</span>
+                    </h1>
+                    <p class="hero-desc" data-aos="fade-up" data-aos-delay="200">
+                        Embu Civil Servants Housing Estate in Embu - From Ksh. 3,675,000.00.
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Controls -->

@@ -833,7 +833,7 @@
                         <i class="bi bi-telephone"></i>
                     </div>
                     <h3>Phone</h3>
-                    <p>+254 700 123 456<br>+254 711 789 012</p>
+                    <p>+254 721 325 902<br>+254 711 789 012</p>
                 </div>
                 
                 <div class="vc-contact-card" data-aos="fade-up" data-aos-delay="200">
@@ -849,7 +849,7 @@
                         <i class="bi bi-geo-alt"></i>
                     </div>
                     <h3>Address</h3>
-                    <p>Nairobi, Kenya<br>Westlands, 5th Floor</p>
+                    <p>New Rehema House,6th Floor, <br> Rhapta Road, Westlands. Nairobi, Kenya</p>
                 </div>
             </div>
         </div>

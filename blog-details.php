@@ -18,19 +18,6 @@
     <?php include 'layout/link.php'; ?>
     
     <style>
-        /* * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f8f6f4;
-            color: #1e2a2e;
-            line-height: 1.6;
-        } */
-
         .vc-container {
             /* max-width: 1000px;
             margin: 0 auto; */
