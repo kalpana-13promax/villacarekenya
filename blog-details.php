@@ -19,8 +19,8 @@
     
     <style>
         .vc-container {
-            /* max-width: 1000px;
-            margin: 0 auto; */
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 60px 20px;
         }
 
@@ -103,7 +103,7 @@
 
         .vc-blog-image img {
             width: 100%;
-            height: auto;
+            height: 400px;
             display: block;
         }
 

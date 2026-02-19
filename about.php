@@ -18,22 +18,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <?php include 'layout/link.php'; ?>
     <style>
-        /* VillaCare About Page - Unique Styles */
-        /* Prefix: vc- (VillaCare) for all classes */
-        
-        /* * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        } */
-
-        /* body {
-            font-family: 'Inter', sans-serif;
-            background: #f8f6f4;
-            color: #0f1a24;
-            line-height: 1.6;
-        } */
-
         .vc-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -217,7 +201,7 @@
 
         .vc-section-header p {
             color: #546e7a;
-            max-width: 600px;
+            max-width: 900px;
             margin: 0 auto;
             font-size: 16px;
         }
@@ -631,10 +615,8 @@
         <div class="vc-container">
             <div class="vc-story-content">
                 <div class="vc-story-text" data-aos="fade-right">
-                    <h2>Our <span>Story</span></h2>
-                    <p>Founded in 2010, VillaCare Kenya started with a simple mission: to provide quality real estate services with integrity and transparency. What began as a small agency has grown into one of Kenya's most trusted property consultants.</p>
-                    <p>Over the years, we've helped thousands of clients find their dream homes, made sound investments, and navigated the complex real estate market with ease. Our team of experienced professionals brings local knowledge and global standards to every transaction.</p>
-                    <p>Today, VillaCare Kenya is recognized for our data-driven approach, innovative developments, and commitment to client satisfaction. We continue to grow and evolve, always putting our clients first.</p>
+                    <h2>Our <span>Vision</span></h2>
+                    <p>To become the recognized leader in providing integrated real estate services to every client we serve. To be able to identify new value added real estate investment opportunities for our clients with the use of our strong market intelligence.</p>
                 </div>
                 <div class="vc-story-image" data-aos="fade-left">
                     <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200&auto=format&fit=crop" alt="VillaCare Kenya Office">
@@ -649,10 +631,10 @@
             <div class="vc-section-header" data-aos="fade-up">
                 <div class="vc-section-tag">
                     <i class="bi bi-bullseye"></i>
-                    <span>OUR MISSION</span>
+                    <span>MISSION</span>
                 </div>
-                <h2>What Drives <span>Us</span></h2>
-                <p>We are committed to transforming lifestyles through innovative real estate solutions</p>
+                <h2>Our<span> Mission</span></h2>
+                <p>Villa Care is committed to providing the finest integrated real estate solutions, by building relationships with our clients, employees and business providers in a professional, ethical and transparent manner.</p>
             </div>
             
             <div class="vc-mission-grid">
@@ -740,80 +722,76 @@
     </section>
 
     <!-- Team Section -->
-    <section class="vc-team-section">
-        <div class="vc-container">
-            <div class="vc-section-header" data-aos="fade-up">
-                <div class="vc-section-tag">
-                    <i class="bi bi-people"></i>
-                    <span>OUR TEAM</span>
+ <section class="vc-team-section">
+    <div class="vc-container">
+        <div class="vc-section-header" data-aos="fade-up">
+            <div class="vc-section-tag">
+                <i class="bi bi-people"></i>
+                <span>OUR TEAM - KENYA</span>
+            </div>
+            <h2>Meet VillaCare <span>Kenya Experts</span></h2>
+            <p>Trusted real estate professionals serving Nairobi and across Kenya</p>
+        </div>
+        
+        <div class="vc-team-grid">
+            
+            <!-- Team Member 1 -->
+            <div class="vc-team-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="vc-team-img">
+                    <img src="https://images.pexels.com/photos/3778680/pexels-photo-3778680.jpeg"
+                         alt="Kenyan Business Professional - CEO VillaCare Kenya"
+                         loading="lazy">
                 </div>
-                <h2>Meet The <span>Experts</span></h2>
-                <p>Dedicated professionals committed to your real estate success</p>
+                <div class="vc-team-info">
+                    <h4>David Mwangi</h4>
+                    <p>CEO & Founder - VillaCare Kenya</p>
+                </div>
             </div>
             
-            <div class="vc-team-grid">
-                <div class="vc-team-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="vc-team-img">
-                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400&auto=format&fit=crop" alt="John Doe">
-                    </div>
-                    <div class="vc-team-info">
-                        <h4>John Doe</h4>
-                        <p>CEO & Founder</p>
-                        <div class="vc-team-social">
-                            <a href="#"><i class="bi bi-linkedin"></i></a>
-                            <a href="#"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
-                    </div>
+            <!-- Team Member 2 -->
+            <div class="vc-team-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="vc-team-img">
+                    <img src="https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg"
+                         alt="Kenyan Female Professional - Sales Director Nairobi"
+                         loading="lazy">
                 </div>
-                
-                <div class="vc-team-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="vc-team-img">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" alt="Jane Smith">
-                    </div>
-                    <div class="vc-team-info">
-                        <h4>Jane Smith</h4>
-                        <p>Head of Sales</p>
-                        <div class="vc-team-social">
-                            <a href="#"><i class="bi bi-linkedin"></i></a>
-                            <a href="#"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="vc-team-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="vc-team-img">
-                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop" alt="Mike Johnson">
-                    </div>
-                    <div class="vc-team-info">
-                        <h4>Mike Johnson</h4>
-                        <p>Property Consultant</p>
-                        <div class="vc-team-social">
-                            <a href="#"><i class="bi bi-linkedin"></i></a>
-                            <a href="#"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="vc-team-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="vc-team-img">
-                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop" alt="Sarah Williams">
-                    </div>
-                    <div class="vc-team-info">
-                        <h4>Sarah Williams</h4>
-                        <p>Marketing Director</p>
-                        <div class="vc-team-social">
-                            <a href="#"><i class="bi bi-linkedin"></i></a>
-                            <a href="#"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#"><i class="bi bi-envelope"></i></a>
-                        </div>
-                    </div>
+                <div class="vc-team-info">
+                    <h4>Grace Wanjiku</h4>
+                    <p>Head of Sales - Nairobi Region</p>
                 </div>
             </div>
+            
+            <!-- Team Member 3 -->
+            <div class="vc-team-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="vc-team-img">
+                    <img src="https://images.pexels.com/photos/4065158/pexels-photo-4065158.jpeg"
+                         alt="Kenyan Property Consultant"
+                         loading="lazy">
+                </div>
+                <div class="vc-team-info">
+                    <h4>Samuel Otieno</h4>
+                    <p>Senior Property Consultant</p>
+                </div>
+            </div>
+            
+            <!-- Team Member 4 -->
+            <div class="vc-team-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="vc-team-img">
+                    <img src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg"
+                         alt="Kenyan Marketing Director"
+                         loading="lazy">
+                </div>
+                <div class="vc-team-info">
+                    <h4>Faith Njeri</h4>
+                    <p>Marketing Director - VillaCare Kenya</p>
+                </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
+
+
 
     <!-- Contact Info Section -->
     <section class="vc-contact-section">

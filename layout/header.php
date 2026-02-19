@@ -39,8 +39,45 @@
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="index.php">HOME</a></li>
                     <li class="nav-item"><a class="nav-link" href="about.php">ABOUT US</a></li>
-                    <li class="nav-item"><a class="nav-link" href="for-sale.php">FOR SALE</a></li>
-                    <li class="nav-item"><a class="nav-link" href="for-rent.php">FOR RENT</a></li>
+                    <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" 
+       href="#" 
+       data-bs-toggle="dropdown">
+        FOR SALE
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="for-sale.php">Flats & Apartments</a></li>
+        <li><a class="dropdown-item" href="for-sale.php">Affordable Housing</a></li>
+        <li><a class="dropdown-item" href="for-sale.php">Apartments</a></li>
+        <li><a class="dropdown-item" href="for-sale.php">Town Houses</a></li>
+        <li><a class="dropdown-item" href="for-sale.php">Villas</a></li>
+        <li><a class="dropdown-item" href="for-sale.php">Hotels</a></li>
+        <li><a class="dropdown-item" href="for-sale.php">Godowns / Warehouses</a></li>
+        <li><a class="dropdown-item" href="for-sale.php">Land</a></li>
+        <li><a class="dropdown-item" href="for-sale.php">Duplex</a></li>
+    </ul>
+</li>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" 
+       href="#" 
+       data-bs-toggle="dropdown">
+        FOR RENT
+    </a>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="for-rent.php">Furnished Apartments</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Apartments</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Town Houses For Rent</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Bungalows</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Studio Apartments</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Bedsitters</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Penthouses For Rent</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Offices For Rent</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Shops For Rent</a></li>
+        <li><a class="dropdown-item" href="for-rent.php">Godowns / Warehouses For Rent</a></li>
+    </ul>
+</li>
+
                     <li class="nav-item"><a class="nav-link" href="services.php">SERVICES</a></li>
                     <li class="nav-item"><a class="nav-link" href="blog.php">BLOG</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact.php">CONTACT</a></li>

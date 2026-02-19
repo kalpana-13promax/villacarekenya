@@ -1,15 +1,4 @@
     <style>
-        /* * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #ffffff;
-            font-family: 'Inter', sans-serif;
-        } */
-
         /* ============================= */
         /*   PROFESSIONAL NEW FEATURES    */
         /* ============================= */
@@ -241,7 +230,7 @@
             }
 
             .section-title span::after {
-                width: 25px;
+                width: 0px;
             }
 
             .feature-content h3 {

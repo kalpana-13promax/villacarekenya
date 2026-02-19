@@ -38,7 +38,7 @@
       Get in touch with our property consultants — we're here to guide you through every step of your real estate journey in Kenya.
     </p>
 
-    <a href="#contact-form" class="btn hero-btn mt-4">
+    <a href="contact.php#contact-form" class="btn hero-btn mt-4">
       Send Message
     </a>
   </div>

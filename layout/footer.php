@@ -27,7 +27,6 @@
                 <ul class="footer-links">
                     <li><a href="about.php">About Us</a></li>
                     <li><a href="services.php">Our Services</a></li>
-                    <li><a href="#">Careers</a></li>
                     <li><a href="blog.php">Blog</a></li>
                     <li><a href="contact.php">Contact</a></li>
                     <li><a href="#">Privacy Policy</a></li>
