@@ -41,6 +41,18 @@
 <section class="prc2-wrapper-2026">
 <div class="container">
 
+<!-- RESULTS SUMMARY -->
+<div class="vc-results-summary mb-4" data-aos="fade-up">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="vc-count-text">
+            Showing <span class="vc-count-num">6</span> Properties
+        </div>
+        <div class="vc-view-options">
+            <span class="text-muted small"><i class="bi bi-sort-down"></i> Default Sorting</span>
+        </div>
+    </div>
+</div>
+
 <!-- PAGE 1 -->
 <div class="row g-4 property-page active" id="page1">
 
@@ -49,7 +61,7 @@
     <div class="prc2-card-2026">
       <div class="prc2-image-box-2026">
         <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop">
-        <div class="prc2-badge-2026">FOR RENT</div>
+        <div class="prc2-badge-2026">FOR SALE</div>
         <div class="prc2-price-2026">Ksh.90,000/Month</div>
       </div>
       <div class="prc2-body-2026">
@@ -74,7 +86,7 @@
     <div class="prc2-card-2026">
       <div class="prc2-image-box-2026">
         <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop">
-        <div class="prc2-badge-2026">FOR RENT</div>
+        <div class="prc2-badge-2026">FOR SALE</div>
         <div class="prc2-price-2026">Ksh.280,000/Month</div>
       </div>
       <div class="prc2-body-2026">
@@ -99,7 +111,7 @@
     <div class="prc2-card-2026">
       <div class="prc2-image-box-2026">
         <img src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=1200&auto=format&fit=crop">
-        <div class="prc2-badge-2026">FOR RENT</div>
+        <div class="prc2-badge-2026">FOR SALE</div>
         <div class="prc2-price-2026">Ksh.150,000/Month</div>
       </div>
       <div class="prc2-body-2026">
@@ -130,7 +142,8 @@
     <div class="prc2-card-2026">
       <div class="prc2-image-box-2026">
         <img src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop">
-        <div class="prc2-badge-2026">FOR RENT</div>
+        <div class="prc2-badge-2026">FOR SALE
+        </div>
         <div class="prc2-price-2026">Ksh.120,000/Month</div>
       </div>
       <div class="prc2-body-2026">
@@ -180,7 +193,7 @@
     <div class="prc2-card-2026">
       <div class="prc2-image-box-2026">
         <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop">
-        <div class="prc2-badge-2026">FOR RENT</div>
+        <div class="prc2-badge-2026">FOR SALE</div>
         <div class="prc2-price-2026">Ksh.180,000/Month</div>
       </div>
       <div class="prc2-body-2026">

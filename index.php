@@ -15,6 +15,121 @@
 <!-- ===== SLIDER ===== -->
 <?php include 'layout/slider.php'; ?>
 
+<!-- ===== PROPERTY FILTER BAR ===== -->
+<section class="pf-section">
+    <div class="container">
+        <div class="pf-card">
+
+            <!-- Filter Fields -->
+            <form action="property.php" method="GET" id="pfForm">
+                <input type="hidden" name="category"  id="pfCategory" value="">
+                <input type="hidden" name="type"      id="pfType"     value="">
+                <input type="hidden" name="location"  id="pfLocation" value="">
+                <input type="hidden" name="price"     id="pfPrice"    value="">
+                <div class="row g-0 pf-fields align-items-stretch">
+
+                    <!-- Keyword -->
+                    <div class="col-lg col-md-6 col-12">
+                        <div class="pf-field">
+                            <label class="pf-label"><i class="fas fa-search"></i> Keyword</label>
+                            <input type="text" name="search" class="pf-input" placeholder="Area, property name…">
+                        </div>
+                    </div>
+
+                    <!-- Property Category -->
+                    <div class="col-lg col-md-6 col-12">
+                        <div class="pf-field pf-field--sep">
+                            <label class="pf-label"><i class="fas fa-th-large"></i> Category</label>
+                            <select name="category" class="pf-input">
+                                <option value="">All Categories</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="villa">Villa</option>
+                                <option value="townhouse">Townhouse</option>
+                                <option value="land">Land / Plot</option>
+                                <option value="commercial">Commercial Space</option>
+                                <option value="office">Office Space</option>
+                            </select>
+                            <i class="fas fa-angle-down pf-arrow"></i>
+                        </div>
+                    </div>
+
+                    <!-- Property Type -->
+                    <div class="col-lg col-md-6 col-12">
+                        <div class="pf-field pf-field--sep">
+                            <label class="pf-label"><i class="fas fa-bed"></i> Property Type</label>
+                            <select name="type" class="pf-input">
+                                <option value="">Any Type</option>
+                                <option value="studio">Studio</option>
+                                <option value="1bed">1 Bedroom</option>
+                                <option value="2bed">2 Bedrooms</option>
+                                <option value="3bed">3 Bedrooms</option>
+                                <option value="4bed+">4+ Bedrooms</option>
+                                <option value="duplex">Duplex</option>
+                                <option value="penthouse">Penthouse</option>
+                            </select>
+                            <i class="fas fa-angle-down pf-arrow"></i>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-lg col-md-6 col-12">
+                        <div class="pf-field pf-field--sep">
+                            <label class="pf-label"><i class="fas fa-map-marker-alt"></i> Location</label>
+                            <select name="location" class="pf-input">
+                                <option value="">Any Location</option>
+                                <option value="lavington">Lavington</option>
+                                <option value="kilimani">Kilimani</option>
+                                <option value="westlands">Westlands</option>
+                                <option value="upperhill">Upperhill</option>
+                                <option value="brookside">Brookside</option>
+                                <option value="karen">Karen</option>
+                                <option value="diani">Diani</option>
+                                <option value="mombasa">Mombasa</option>
+                                <option value="nairobi-cbd">Nairobi CBD</option>
+                                <option value="runda">Runda</option>
+                            </select>
+                            <i class="fas fa-angle-down pf-arrow"></i>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="col-lg col-md-6 col-12">
+                        <div class="pf-field pf-field--sep">
+                            <label class="pf-label"><i class="fas fa-tag"></i> Price Range</label>
+                            <select name="price" class="pf-input">
+                                <option value="">Any Price</option>
+                                <option value="0-5m">Under KES 5M</option>
+                                <option value="5m-10m">KES 5M – 10M</option>
+                                <option value="10m-20m">KES 10M – 20M</option>
+                                <option value="20m-50m">KES 20M – 50M</option>
+                                <option value="50m+">Above KES 50M</option>
+                            </select>
+                            <i class="fas fa-angle-down pf-arrow"></i>
+                        </div>
+                    </div>
+
+                    <!-- Search Button -->
+                    <div class="col-lg-auto col-12">
+                        <button type="submit" class="pf-btn">
+                            <i class="fas fa-search"></i>
+                            <span>Search</span>
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>
+
+<script>
+function pfTab(el, val) {
+    document.querySelectorAll('.pf-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('pfIntent').value = val;
+}
+</script>
 
 <!-- Professional New Features Section -->
 <?php include 'layout/property-featured.php'; ?>

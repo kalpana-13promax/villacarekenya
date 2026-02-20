@@ -11,7 +11,7 @@
                     New Rehema House,6th Floor, Rhapta Road<br>
                     Westlands Nairobi, Kenya<br><br>
                     <i class="bi bi-telephone"></i>
-                    +254 712 325 902
+                    +254 721 325 902
                 </p>
 
                 <p class="footer-email">

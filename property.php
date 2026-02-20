@@ -16,6 +16,76 @@
 <?php 
 include 'config/properties.php';
 
+// Capture Filter Parameters
+$f_search   = isset($_GET['search'])   ? trim($_GET['search'])   : '';
+$f_category = isset($_GET['category']) ? trim($_GET['category']) : '';
+$f_type     = isset($_GET['type'])     ? trim($_GET['type'])     : '';
+$f_location = isset($_GET['location']) ? trim($_GET['location']) : '';
+$f_price    = isset($_GET['price'])    ? trim($_GET['price'])    : '';
+
+// Helper to convert price strings to numbers
+function parsePriceValue($priceStr) {
+    if (empty($priceStr)) return 0;
+    // Remove Ksh, commas, and /Month
+    $val = str_ireplace(['Ksh.', ',', '/Month'], '', $priceStr);
+    $val = trim($val);
+    
+    // Handle M (Million)
+    if (stripos($val, 'M') !== false) {
+        return (float)str_ireplace('M', '', $val) * 1000000;
+    }
+    return (float)$val;
+}
+
+// Filter properties
+$filtered_properties = array_filter($properties, function($p) use ($f_search, $f_category, $f_type, $f_location, $f_price) {
+    // Search match (Keyword)
+    if ($f_search) {
+        $searchMatch = stripos($p['title'], $f_search) !== false || 
+                       stripos($p['description'], $f_search) !== false || 
+                       stripos($p['location'], $f_search) !== false;
+        if (!$searchMatch) return false;
+    }
+    
+    // Category match
+    if ($f_category && strtolower($p['type']) !== strtolower($f_category)) {
+        // Handle "furnished" as "apartment" category if needed, or stick to exact matches
+        if ($f_category == 'apartment' && strtolower($p['type']) == 'furnished') {
+            // Match
+        } else {
+            return false;
+        }
+    }
+    
+    // Type (Bedrooms) match
+    if ($f_type) {
+        $beds = (int)$p['beds'];
+        if ($f_type == 'studio' && $beds != 1) return false;
+        if ($f_type == '1bed' && $beds != 1) return false;
+        if ($f_type == '2bed' && $beds != 2) return false;
+        if ($f_type == '3bed' && $beds != 3) return false;
+        if ($f_type == '4bed+' && $beds < 4) return false;
+        if ($f_type == 'penthouse' && strtolower($p['type']) != 'penthouse') return false;
+    }
+    
+    // Location match
+    if ($f_location && stripos($p['location'], $f_location) === false) {
+        return false;
+    }
+    
+    // Price range match
+    if ($f_price) {
+        $price = parsePriceValue($p['price_display']);
+        if ($f_price == '0-5m' && $price > 5000000) return false;
+        if ($f_price == '5m-10m' && ($price < 5000000 || $price > 10000000)) return false;
+        if ($f_price == '10m-20m' && ($price < 10000000 || $price > 20000000)) return false;
+        if ($f_price == '20m-50m' && ($price < 20000000 || $price > 50000000)) return false;
+        if ($f_price == '50m+' && $price < 50000000) return false;
+    }
+    
+    return true;
+});
+
 // Page-level SEO
 $meta_title = 'Premium Property Listings | VillaCare Kenya';
 $meta_description = 'Browse selected premium properties for sale and rent from VillaCare Kenya.';
@@ -39,9 +109,9 @@ include 'layout/link.php';
     <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1600&auto=format&fit=crop" alt="Luxury Property Banner">
     <div class="prb3-overlay-2026"></div>
     <div class="prb3-content-2026">
-        <h2 class="prb3-title-2026">Premium Property Listings</h2>
-        <div class="prb3-breadcrumb-2026">
-            <a href="#">Home</a> <i class="bi bi-chevron-right" style="font-size: 12px; margin: 0 5px;"></i> Properties
+        <h2 class="prb3-title-2026">Property Listings</h2>
+        <div class="prb3-breadcrumb-2026 text-white opacity-75">
+            Showing <strong><?php echo count($filtered_properties); ?></strong> Results
         </div>
     </div>
 </section>
@@ -51,12 +121,22 @@ include 'layout/link.php';
     <div class="container">
 
         <?php 
-        $count = 0;
-        foreach (array_slice($properties, 0, 5) as $property): 
-            $count++;
-            $carouselId = 'plxSlider' . $count;
-            $isEven = $count % 2 == 0;
-            $delay = $count > 1 ? 200 : 0;
+        if (empty($filtered_properties)):
+        ?>
+        <div class="text-center py-5" data-aos="fade-up">
+            <i class="bi bi-search" style="font-size: 4rem; color: #d4a85f; opacity: 0.3;"></i>
+            <h3 class="mt-4">No matching properties found</h3>
+            <p class="text-muted">Try adjusting your filters or search keywords.</p>
+            <a href="property.php" class="plx-btn mt-3">View All Properties</a>
+        </div>
+        <?php
+        else:
+            $count = 0;
+            foreach ($filtered_properties as $property): 
+                $count++;
+                $carouselId = 'plxSlider' . $count;
+                $isEven = $count % 2 == 0;
+                $delay = $count > 1 ? 200 : 0;
         ?>
 
         <!-- PROPERTY LISTING -->
@@ -118,7 +198,7 @@ include 'layout/link.php';
             </div>
         </div>
 
-        <?php endforeach; ?>
+        <?php endforeach; endif; ?>
 
     </div>
 </section>
