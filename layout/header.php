@@ -26,7 +26,7 @@
 <header class="main-header">
     <div class="container header-container">  <!-- Custom container with less width -->
         <nav class="navbar navbar-expand-lg navbar-dark p-0">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="<?php echo DOMAIN; ?>">
                 VILLACARE
                 <span>REAL ESTATE</span>
             </a>
@@ -37,8 +37,8 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="menu">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="index.php">HOME</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.php">ABOUT US</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo DOMAIN; ?>">HOME</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo DOMAIN; ?>about/">ABOUT US</a></li>
                     <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" 
        href="#" 
@@ -46,15 +46,15 @@
         FOR SALE
     </a>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="for-sale.php">Flats & Apartments</a></li>
-        <li><a class="dropdown-item" href="for-sale.php">Affordable Housing</a></li>
-        <li><a class="dropdown-item" href="for-sale.php">Apartments</a></li>
-        <li><a class="dropdown-item" href="for-sale.php">Town Houses</a></li>
-        <li><a class="dropdown-item" href="for-sale.php">Villas</a></li>
-        <li><a class="dropdown-item" href="for-sale.php">Hotels</a></li>
-        <li><a class="dropdown-item" href="for-sale.php">Godowns / Warehouses</a></li>
-        <li><a class="dropdown-item" href="for-sale.php">Land</a></li>
-        <li><a class="dropdown-item" href="for-sale.php">Duplex</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=apartment">Flats & Apartments</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=affordable-housing">Affordable Housing</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=apartment">Apartments</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=town-house">Town Houses</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=villa">Villas</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=hotel">Hotels</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=warehouse">Godowns / Warehouses</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=land">Land</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-sale/?type=duplex">Duplex</a></li>
     </ul>
 </li>
 
@@ -65,22 +65,22 @@
         FOR RENT
     </a>
     <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="for-rent.php">Furnished Apartments</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Apartments</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Town Houses For Rent</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Bungalows</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Studio Apartments</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Bedsitters</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Penthouses For Rent</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Offices For Rent</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Shops For Rent</a></li>
-        <li><a class="dropdown-item" href="for-rent.php">Godowns / Warehouses For Rent</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=furnished-apartment">Furnished Apartments</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=apartment">Apartments</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=town-house">Town Houses For Rent</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=bungalow">Bungalows</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=studio">Studio Apartments</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=bedsitters">Bedsitters</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=penthouse">Penthouses For Rent</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=office">Offices For Rent</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=shop">Shops For Rent</a></li>
+        <li><a class="dropdown-item" href="<?php echo DOMAIN; ?>for-rent/?type=warehouse">Godowns / Warehouses For Rent</a></li>
     </ul>
 </li>
 
-                    <li class="nav-item"><a class="nav-link" href="services.php">SERVICES</a></li>
-                    <li class="nav-item"><a class="nav-link" href="blog.php">BLOG</a></li>
-                    <li class="nav-item"><a class="nav-link" href="contact.php">CONTACT</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo DOMAIN; ?>services/">SERVICES</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo DOMAIN; ?>blog/">BLOG</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo DOMAIN; ?>contact/">CONTACT</a></li>
                 </ul>
             </div>
         </nav>

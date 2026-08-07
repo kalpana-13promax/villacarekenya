@@ -1,3 +1,172 @@
+<?php
+require_once('includes/config.php');
+
+$services = $boj->getQuery("SELECT * FROM tbl_services ORDER BY id DESC");
+
+
+// Fallback services if database table is empty
+$fallback_services = [
+    [
+        'title' => 'Project Management',
+        'desc' => 'We manage construction projects efficiently to deliver on time, within budget, and as per client requirements.',
+        'image' => 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop',
+        'icon' => 'bi-building',
+        'link' => 'projects.php#project-management',
+        'link_text' => 'View Projects'
+    ],
+    [
+        'title' => 'Property Management',
+        'desc' => 'Full-service management: tenant sourcing, maintenance coordination, rent collection and transparent reporting designed for Kenyan landlords.',
+        'image' => 'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?q=80&w=1200&auto=format&fit=crop',
+        'icon' => 'bi-key',
+        'link' => '',
+        'link_text' => ''
+    ],
+    [
+        'title' => 'Investment Advisory',
+        'desc' => 'Market analysis, suburb reports and financial modelling to identify high-return opportunities and long-term growth corridors.',
+        'image' => 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop',
+        'icon' => 'bi-graph-up',
+        'link' => '',
+        'link_text' => ''
+    ],
+    [
+        'title' => 'Short & Long-Term Rentals',
+        'desc' => 'Managed rental programmes for corporate clients, expatriates and local tenants — with marketing, bookings and property care included.',
+        'image' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
+        'icon' => 'bi-house',
+        'link' => 'for-rent.php',
+        'link_text' => 'View Rentals'
+    ],
+    [
+        'title' => 'Valuation & Appraisal',
+        'desc' => 'Accredited valuation reports for sales, mortgages and investment planning — prepared by experienced Kenyan valuers.',
+        'image' => 'https://images.unsplash.com/photo-1580048915913-4f8f5cb481c4?q=80&w=1200&auto=format&fit=crop',
+        'icon' => 'bi-calculator',
+        'link' => '',
+        'link_text' => ''
+    ],
+    [
+        'title' => 'Legal & Conveyancing',
+        'desc' => 'Comprehensive conveyancing and transaction support including title searches, contracts and regulatory compliance for Kenyan property transfers.',
+        'image' => 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop',
+        'icon' => 'bi-briefcase',
+        'link' => 'contact.php',
+        'link_text' => 'Contact Legal Team'
+    ]
+];
+
+$services_to_show = [];
+
+if (!empty($services)) {
+    // If database has services, format them
+    foreach ($services as $service) {
+        
+        // Check if image exists
+        $imagePath = 'uploads/' . $service->image;
+        if (!empty($service->image) && file_exists(__DIR__ . '/' . $imagePath)) {
+            $finalImage = $imagePath;
+        } else {
+            // Default image if missing
+            $finalImage = 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop';
+        }
+
+        // Match with fallback to get predefined icons and links if they match title
+        $icon = 'bi-building';
+        $link = '';
+        $link_text = '';
+
+        foreach ($fallback_services as $fb) {
+            if (strcasecmp(trim($fb['title']), trim($service->heading)) === 0) {
+                $icon = !empty($fb['icon']) ? $fb['icon'] : $icon;
+                $link = !empty($fb['link']) ? $fb['link'] : '';
+                $link_text = !empty($fb['link_text']) ? $fb['link_text'] : '';
+                break;
+            }
+        }
+
+        // Add to the list
+        $services_to_show[] = [
+            'title' => $service->heading,
+            'desc' => $service->short_description,
+            'image' => $finalImage,
+            'icon' => $icon,
+            'link' => $link,
+            'link_text' => $link_text
+        ];
+    }
+}
+
+// Append fallback services if database has fewer items, avoiding duplicates
+$count_needed = count($fallback_services) - count($services_to_show);
+if ($count_needed > 0 || empty($services)) {
+    foreach ($fallback_services as $fb) {
+        $exists = false;
+        foreach ($services_to_show as $s) {
+            if (strcasecmp(trim($s['title']), trim($fb['title'])) === 0) {
+                $exists = true;
+                break;
+            }
+        }
+        if (!$exists) {
+            $services_to_show[] = [
+                'title' => $fb['title'],
+                'desc' => $fb['desc'],
+                'image' => $fb['image'],
+                'icon' => $fb['icon'],
+                'link' => $fb['link'],
+                'link_text' => $fb['link_text']
+            ];
+        }
+    }
+}
+
+// ---------------------------------------------------------
+// Page Content Configuration (Easy to edit dynamic content)
+// ---------------------------------------------------------
+$page_content = [
+    'banner' => [
+        'image' => 'https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1600&auto=format&fit=crop',
+        'title' => 'Our <span>Services</span>'
+    ],
+    'intro' => [
+        'tag' => 'VILLACARE KENYA',
+        'title' => 'Full-Service <span>Property</span> Solutions',
+        'text' => 'Villacare Kenya specialises in property sales, rentals, management and advisory services across Nairobi and the Coast — built for homeowners and investors.'
+    ],
+    'featured' => [
+        'image' => 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
+        'tag' => 'FEATURED SERVICE',
+        'title' => 'Villacare <span>Property Solutions</span>',
+        'desc' => 'Villacare Real Estate delivers trusted property services designed to help clients buy, sell, rent and invest with confidence and transparency.',
+        'list' => [
+            'Residential & Commercial Property Sales',
+            'Rental & Leasing Management Services',
+            'Professional Market Guidance & Investment Support'
+        ],
+        'btn_text' => 'Discover Our Services',
+        'btn_link' => 'services/'
+    ],
+    'process' => [
+        'title' => 'How It <span>Works</span>',
+        'desc' => 'A simple, transparent process from consultation to closing',
+        'steps' => [
+            ['title' => 'Consultation', 'desc' => 'We meet to understand your needs, budget, and timeline'],
+            ['title' => 'Property Search', 'desc' => 'We curate properties that match your criteria'],
+            ['title' => 'Viewings', 'desc' => 'Accompanied visits to shortlisted properties'],
+            ['title' => 'Closing', 'desc' => 'We guide you through negotiations and paperwork']
+        ]
+    ],
+    'cta' => [
+        'title' => 'Ready to Get <span>Started?</span>',
+        'desc' => 'Contact our team today for a free consultation and let us help you achieve your real estate goals.',
+        'btn1_text' => 'Call Us Now',
+        'btn1_link' => 'contact/',
+        'btn2_text' => 'Schedule Consultation',
+        'btn2_link' => 'contact/'
+    ]
+];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,12 +194,12 @@
 
     <!-- Page Banner -->
     <section class="vc-page-banner">
-        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1600&auto=format&fit=crop" alt="Services">
+        <img src="<?php echo $page_content['banner']['image']; ?>" alt="Services">
         <div class="vc-banner-overlay"></div>
         <div class="vc-banner-content">
-            <h1 class="vc-banner-title">Our <span>Services</span></h1>
+            <h1 class="vc-banner-title"><?php echo $page_content['banner']['title']; ?></h1>
             <div class="vc-banner-breadcrumb">
-                <a href="#">Home</a> <i class="bi bi-chevron-right"></i> Services
+                <a href="<?php echo DOMAIN; ?>">Home</a> <i class="bi bi-chevron-right"></i> Services
             </div>
         </div>
     </section>
@@ -38,9 +207,9 @@
     <!-- Services Intro -->
     <section class="vc-services-intro">
         <div class="vc-container">
-            <div class="vc-intro-tag">VILLACARE KENYA</div>
-            <h2 class="vc-intro-title">Full-Service <span>Property</span> Solutions</h2>
-            <p class="vc-intro-text">Villacare Kenya specialises in property sales, rentals, management and advisory services across Nairobi and the Coast — built for homeowners and investors.</p>
+            <div class="vc-intro-tag"><?php echo $page_content['intro']['tag']; ?></div>
+            <h2 class="vc-intro-title"><?php echo $page_content['intro']['title']; ?></h2>
+            <p class="vc-intro-text"><?php echo $page_content['intro']['text']; ?></p>
         </div>
     </section>
 
@@ -49,101 +218,25 @@
         <div class="vc-container">
             <div class="vc-grid">
                 
-                <!-- Service 1 -->
-                <div class="vc-service-item" data-aos="fade-up">
+                <?php foreach ($services_to_show as $idx => $s): ?>
+                <!-- Service <?php echo $idx + 1; ?> -->
+                <div class="vc-service-item" data-aos="fade-up" data-aos-delay="<?php echo ($idx % 3) * 100; ?>">
                     <div class="vc-service-image">
-                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop" alt="Property Sales Kenya">
+                        <img src="<?php echo htmlspecialchars($s['image']); ?>" alt="<?php echo htmlspecialchars($s['title']); ?>">
                         <div class="vc-service-overlay"></div>
                         <div class="vc-service-icon">
-                            <i class="bi bi-building"></i>
+                            <i class="bi <?php echo htmlspecialchars($s['icon']); ?>"></i>
                         </div>
                     </div>
                     <div class="vc-service-content">
-                        <h3>Project Management</h3>
-                        <p>We manage construction projects efficiently to deliver on time, within budget, and as per client requirements.</p>
-                        <a href="projects.php#project-management" class="vc-service-link">View Projects <i class="bi bi-arrow-right"></i></a>
+                        <h3><?php echo htmlspecialchars($s['title']); ?></h3>
+                        <p><?php echo htmlspecialchars($s['desc']); ?></p>
+                        <?php if (!empty($s['link'])): ?>
+                        <a href="<?php echo htmlspecialchars($s['link']); ?>" class="vc-service-link"><?php echo htmlspecialchars(!empty($s['link_text']) ? $s['link_text'] : 'Learn More'); ?> <i class="bi bi-arrow-right"></i></a>
+                        <?php endif; ?>
                     </div>
                 </div>
-
-                <!-- Service 2 -->
-                <div class="vc-service-item" data-aos="fade-up" data-aos-delay="100">
-                    <div class="vc-service-image">
-                        <img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?q=80&w=1200&auto=format&fit=crop" alt="Property Management Kenya">
-                        <div class="vc-service-overlay"></div>
-                        <div class="vc-service-icon">
-                            <i class="bi bi-key"></i>
-                        </div>
-                    </div>
-                    <div class="vc-service-content">
-                        <h3>Property Management</h3>
-                        <p>Full-service management: tenant sourcing, maintenance coordination, rent collection and transparent reporting designed for Kenyan landlords.</p>
-                        <!-- <a href="services.php#management" class="vc-service-link">Our Management Plans <i class="bi bi-arrow-right"></i></a> -->
-                    </div>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="vc-service-item" data-aos="fade-up" data-aos-delay="200">
-                    <div class="vc-service-image">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop" alt="Investment Advisory Kenya">
-                        <div class="vc-service-overlay"></div>
-                        <div class="vc-service-icon">
-                            <i class="bi bi-graph-up"></i>
-                        </div>
-                    </div>
-                    <div class="vc-service-content">
-                        <h3>Investment Advisory</h3>
-                        <p>Market analysis, suburb reports and financial modelling to identify high-return opportunities and long-term growth corridors.</p>
-                        <!-- <a href="services.php#advisory" class="vc-service-link">Request Advisory <i class="bi bi-arrow-right"></i></a> -->
-                    </div>
-                </div>
-
-                <!-- Service 4 -->
-                <div class="vc-service-item" data-aos="fade-up" data-aos-delay="300">
-                    <div class="vc-service-image">
-                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="Short & Long Term Rentals Kenya">
-                        <div class="vc-service-overlay"></div>
-                        <div class="vc-service-icon">
-                            <i class="bi bi-house"></i>
-                        </div>
-                    </div>
-                    <div class="vc-service-content">
-                        <h3>Short & Long-Term Rentals</h3>
-                        <p>Managed rental programmes for corporate clients, expatriates and local tenants — with marketing, bookings and property care included.</p>
-                        <a href="for-rent.php" class="vc-service-link">View Rentals <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </div>
-
-                <!-- Service 5 -->
-                <div class="vc-service-item" data-aos="fade-up" data-aos-delay="400">
-                    <div class="vc-service-image">
-                        <img src="https://images.unsplash.com/photo-1580048915913-4f8f5cb481c4?q=80&w=1200&auto=format&fit=crop" alt="Valuation & Appraisal Kenya">
-                        <div class="vc-service-overlay"></div>
-                        <div class="vc-service-icon">
-                            <i class="bi bi-calculator"></i>
-                        </div>
-                    </div>
-                    <div class="vc-service-content">
-                        <h3>Valuation & Appraisal</h3>
-                        <p>Accredited valuation reports for sales, mortgages and investment planning — prepared by experienced Kenyan valuers.</p>
-                        <!-- <a href="services.php#valuation" class="vc-service-link">Request Valuation <i class="bi bi-arrow-right"></i></a> -->
-                    </div>
-                </div>
-
-                <!-- Service 6 -->
-                <div class="vc-service-item" data-aos="fade-up" data-aos-delay="500">
-                    <div class="vc-service-image">
-                        <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop" alt="Legal & Conveyancing Kenya">
-                        <div class="vc-service-overlay"></div>
-                        <div class="vc-service-icon">
-                            <i class="bi bi-briefcase"></i>
-                        </div>
-                    </div>
-                    <div class="vc-service-content">
-                        <h3>Legal & Conveyancing</h3>
-                        <p>Comprehensive conveyancing and transaction support including title searches, contracts and regulatory compliance for Kenyan property transfers.</p>
-                        <a href="contact.php" class="vc-service-link">Contact Legal Team <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </div>
+                <?php endforeach; ?>
 
             </div>
         </div>
@@ -154,25 +247,25 @@
     <div class="vc-container">
         <div class="vc-featured-row">
             <div class="vc-featured-content">
-                <div class="vc-featured-tag">FEATURED SERVICE</div>
+                <div class="vc-featured-tag"><?php echo $page_content['featured']['tag']; ?></div>
                 
-                <h2>Villacare <span>Property Solutions</span></h2>
+                <h2><?php echo $page_content['featured']['title']; ?></h2>
                 
-                <p>Villacare Real Estate delivers trusted property services designed to help clients buy, sell, rent and invest with confidence and transparency.</p>
+                <p><?php echo $page_content['featured']['desc']; ?></p>
                 
                 <ul class="vc-featured-list">
-                    <li><i class="bi bi-check-circle-fill"></i> Residential & Commercial Property Sales</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Rental & Leasing Management Services</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Professional Market Guidance & Investment Support</li>
+                    <?php foreach($page_content['featured']['list'] as $listItem): ?>
+                    <li><i class="bi bi-check-circle-fill"></i> <?php echo $listItem; ?></li>
+                    <?php endforeach; ?>
                 </ul>
                 
-                <a href="services.php" class="vc-featured-btn">
-                    Discover Our Services <i class="bi bi-arrow-right"></i>
+                <a href="<?php echo DOMAIN . $page_content['featured']['btn_link']; ?>" class="vc-featured-btn">
+                    <?php echo $page_content['featured']['btn_text']; ?> <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
 
             <div class="vc-featured-image">
-                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop" alt="Villacare Real Estate">
+                <img src="<?php echo $page_content['featured']['image']; ?>" alt="Villacare Real Estate">
             </div>
         </div>
     </div>
@@ -183,30 +276,17 @@
     <section class="vc-process-section">
         <div class="vc-container">
             <div class="vc-process-header">
-                <h2>How It <span>Works</span></h2>
-                <p>A simple, transparent process from consultation to closing</p>
+                <h2><?php echo $page_content['process']['title']; ?></h2>
+                <p><?php echo $page_content['process']['desc']; ?></p>
             </div>
             <div class="vc-process-steps">
+                <?php foreach($page_content['process']['steps'] as $index => $step): ?>
                 <div class="vc-step">
-                    <div class="vc-step-number">1</div>
-                    <h4>Consultation</h4>
-                    <p>We meet to understand your needs, budget, and timeline</p>
+                    <div class="vc-step-number"><?php echo $index + 1; ?></div>
+                    <h4><?php echo $step['title']; ?></h4>
+                    <p><?php echo $step['desc']; ?></p>
                 </div>
-                <div class="vc-step">
-                    <div class="vc-step-number">2</div>
-                    <h4>Property Search</h4>
-                    <p>We curate properties that match your criteria</p>
-                </div>
-                <div class="vc-step">
-                    <div class="vc-step-number">3</div>
-                    <h4>Viewings</h4>
-                    <p>Accompanied visits to shortlisted properties</p>
-                </div>
-                <div class="vc-step">
-                    <div class="vc-step-number">4</div>
-                    <h4>Closing</h4>
-                    <p>We guide you through negotiations and paperwork</p>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
@@ -214,11 +294,11 @@
     <!-- CTA Section -->
     <section class="vc-cta-block">
         <div class="vc-container">
-            <h2>Ready to Get <span>Started?</span></h2>
-            <p>Contact our team today for a free consultation and let us help you achieve your real estate goals.</p>
+            <h2><?php echo $page_content['cta']['title']; ?></h2>
+            <p><?php echo $page_content['cta']['desc']; ?></p>
             <div class="vc-cta-group">
-                <a href="#" class="vc-cta-primary"><i class="bi bi-telephone me-2"></i>Call Us Now</a>
-                <a href="#" class="vc-cta-secondary"><i class="bi bi-calendar me-2"></i>Schedule Consultation</a>
+                <a href="<?php echo DOMAIN . $page_content['cta']['btn1_link']; ?>" class="vc-cta-primary"><i class="bi bi-telephone me-2"></i><?php echo $page_content['cta']['btn1_text']; ?></a>
+                <a href="<?php echo DOMAIN . $page_content['cta']['btn2_link']; ?>" class="vc-cta-secondary"><i class="bi bi-calendar me-2"></i><?php echo $page_content['cta']['btn2_text']; ?></a>
             </div>
         </div>
     </section>

@@ -1,0 +1,62 @@
+<?php
+
+class project extends db
+{
+	
+	function project_add ()
+	{
+		$file_name = explode ('.' , $_FILES['browsers']['name']);
+		$file_tmp = $_FILES['browsers']['tmp_name'];
+		$random = substr(number_format(time() * rand(),0,'',''),0,4);
+		$name = $random. '.' .end($file_name);
+		move_uploaded_file( $file_tmp,  "uploads/".$name );
+		
+        
+        date_default_timezone_set("Asia/Kolkata");
+        $date_time =    date("d/m/Y h:i:sa");
+		
+		$data = $this->mysqli->query("INSERT INTO project (, , , , , , , , , ) 
+        values
+        
+        ('$_POST[pro_name]', '$_POST[pro_location]', '$_POST[pro_area]', '$_POST[pro_description]', '$name', '$getuserdata->name', '$date_time', 'Macbook', 'Safari', 'private')
+									"); 
+									
+									$array = array(
+			'pro_name' => $_POST['pro_name'],
+			'pro_location' => $_POST['username'],
+			'pro_area' => $_POST['password'], 
+			'pro_description' => $_POST['usertype'], 
+			'pro_image' => $_POST['contact'], 
+			'for_ploting' => $_POST['for_plot'],
+			'pro_created_by' => $_POST['mail'], 
+			'pro_created_time' => $_POST['dob'], 
+			'client_browser' => 'Unknown',
+			'machine_name' => 'Unknown',
+			'client_ip' => 'Únknown'
+			
+		);
+		//print_r($array);
+		//die;
+		 $data = $this->insert_query('user', $array);
+		session_start();
+		if( $data )
+		{
+			$_SESSION['suc'] = 'Project Added Successfully';
+		}
+		else
+		{
+			$_SESSION['fal'] = ' not insert, Something wrong!' . mysqli_error();
+		}
+			header("location: project-add.php?nav=projects");
+			die;
+	}
+}
+	
+
+if(isset($_POST['project-add']))
+{
+	$obj = new project();
+	$obj->project_add ();
+}
+
+?>

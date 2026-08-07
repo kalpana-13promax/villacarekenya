@@ -2,10 +2,10 @@
 // Dynamic meta: set these variables on a page before including this file:
 // $meta_title, $meta_description, $meta_keywords, $meta_author, $og_title, $og_description, $og_image
 
-$meta_title = isset($meta_title) ? $meta_title : 'Villacare | Premium Real Estate Since 1991';
-$meta_description = isset($meta_description) ? $meta_description : 'Villacare Real Estate - Premium Developments & Investment Solutions Since 1991';
+$meta_title = isset($meta_title) ? $meta_title : 'Villacare | Premium Real Estate Kenya';
+$meta_description = isset($meta_description) ? $meta_description : 'Villacare Real Estate - Premium Developments & Investment Solutions Since 1994';
 $meta_keywords = isset($meta_keywords) ? $meta_keywords : 'Real Estate, Property, Buy, Rent, Luxury Homes, Investment';
-$meta_author = isset($meta_author) ? $meta_author : 'Villacare';
+$meta_author = isset($meta_author) ? $meta_author : 'Villacare kenya';
 $og_title = isset($og_title) ? $og_title : $meta_title;
 $og_description = isset($og_description) ? $og_description : $meta_description;
 $og_image = isset($og_image) ? $og_image : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
@@ -36,5 +36,5 @@ $og_image = isset($og_image) ? $og_image : 'https://images.unsplash.com/photo-16
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="<?php echo DOMAIN; ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo DOMAIN; ?>assets/css/responsive.css">

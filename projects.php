@@ -1,3 +1,104 @@
+<?php
+require_once('includes/config.php');
+
+$db_projects = null;
+try {
+    $database = new db();
+    $db_projects = $database->getQuery("SELECT * FROM project ORDER BY id DESC");
+} catch (Exception $e) {
+    // db failed
+}
+
+// Fallback static projects
+$fallback_projects = [
+    [
+        'id' => 101,
+        'title' => 'Kitisuru Terraces',
+        'image' => 'assets/images/kitisuru.jpg'
+    ],
+    [
+        'id' => 102,
+        'title' => 'Lenanan Gardens',
+        'image' => 'assets/images/lenanan.jpg'
+    ],
+    [
+        'id' => 103,
+        'title' => 'Oyster Paradise',
+        'image' => 'assets/images/oyster.jpg'
+    ],
+    [
+        'id' => 104,
+        'title' => 'Belcrest Gardens',
+        'image' => 'assets/images/belcrest.jpg'
+    ],
+    [
+        'id' => 105,
+        'title' => 'Malibu Court',
+        'image' => 'assets/images/malibu.jpg'
+    ],
+    [
+        'id' => 106,
+        'title' => 'Villa Maria',
+        'image' => 'assets/images/villa.jpg'
+    ],
+    [
+        'id' => 107,
+        'title' => 'Brooklyn Springs',
+        'image' => 'assets/images/brooklyn.jpg'
+    ],
+    [
+        'id' => 108,
+        'title' => 'The Grand Palace',
+        'image' => 'assets/images/grand.jpg'
+    ]
+];
+
+$projects_to_show = [];
+if (!empty($db_projects)) {
+    foreach ($db_projects as $idx => $proj) {
+        $proj_img = '';
+        if (!empty($proj->pro_image) && file_exists(__DIR__ . '/uploads/' . $proj->pro_image)) {
+            $proj_img = DOMAIN . 'uploads/' . $proj->pro_image;
+        } else {
+            $proj_img = DOMAIN . 'assets/images/default.jpg';
+        }
+        $projects_to_show[] = [
+            'id' => $proj->id,
+            'title' => $proj->pro_name,
+            'image' => $proj_img,
+            'is_db' => true
+        ];
+    }
+}
+
+// Append fallback projects to ensure grid is nicely filled if database has fewer than 8 projects
+$count_needed = 8 - count($projects_to_show);
+if ($count_needed > 0) {
+    $added = 0;
+    foreach ($fallback_projects as $fb) {
+        if ($added >= $count_needed) {
+            break;
+        }
+        // Check if the title is not already present to avoid duplication
+        $exists = false;
+        foreach ($projects_to_show as $p) {
+            if (strcasecmp($p['title'], $fb['title']) === 0) {
+                $exists = true;
+                break;
+            }
+        }
+        if (!$exists) {
+            $projects_to_show[] = [
+                'id' => $fb['id'],
+                'title' => $fb['title'],
+                'image' => $fb['image'],
+                'is_db' => false
+            ];
+            $added++;
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -243,93 +344,17 @@
     <!-- Project Grid -->
     <div class="row g-3">
         
-        <!-- Diani Projects -->
-        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
+        <?php foreach ($projects_to_show as $idx => $p): ?>
+        <!-- Project <?php echo $idx + 1; ?> -->
+        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="<?php echo (($idx % 4) + 1) * 100; ?>">
             <div class="project-card">
-                <img src="assets/images/kitisuru.jpg" class="img-fluid" alt="Diani">
+                <img src="<?php echo htmlspecialchars($p['image']); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($p['title']); ?>">
                 <div class="project-overlay">
-                    <div class="project-title">Kitisuru Terraces</div>
-                    <!-- <div class="project-count"><i class="bi bi-building"></i> 4 Projects</div> -->
+                    <div class="project-title"><?php echo htmlspecialchars($p['title']); ?></div>
                 </div>
             </div>
         </div>
-
-        <!-- Juja Projects -->
-        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="200">
-            <div class="project-card">
-                <img src="assets/images/lenanan.jpg" class="img-fluid" alt="Juja">
-                <div class="project-overlay">
-                    <div class="project-title">Lenanan Gardens</div>
-                    <!-- <div class="project-count"><i class="bi bi-building"></i> 11 Projects</div> -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Konza Projects -->
-        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="300">
-            <div class="project-card">
-                <img src="assets/images/oyster.jpg" class="img-fluid" alt="Konza">
-                <div class="project-overlay">
-                    <div class="project-title">Oyster Paradise</div>
-                    <!-- <div class="project-count"><i class="bi bi-building"></i> 6 Projects</div> -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Nairobi Projects -->
-        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="400">
-            <div class="project-card">
-                <img src="assets/images/belcrest.jpg" class="img-fluid" alt="Nairobi">
-                <div class="project-overlay">
-                    <div class="project-title">Belcrest Gardens</div>
-                    <!-- <div class="project-count"><i class="bi bi-building"></i> 9 Projects</div> -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Kilimani Projects -->
-        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="500">
-            <div class="project-card">
-                <img src="assets/images/malibu.jpg" class="img-fluid" alt="Kilimani">
-                <div class="project-overlay">
-                    <div class="project-title">Malibu Court</div>
-                    <!-- <div class="project-count"><i class="bi bi-building"></i> 7 Projects</div> -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Westlands Projects -->
-        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="600">
-            <div class="project-card">
-                <img src="assets/images/villa.jpg" class="img-fluid" alt="Westlands">
-                <div class="project-overlay">
-                    <div class="project-title">Villa Maria</div>
-                    <!-- <div class="project-count"><i class="bi bi-building"></i> 12 Projects</div> -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Karen Projects -->
-        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="700">
-            <div class="project-card">
-                <img src="assets/images/brooklyn.jpg" class="img-fluid" alt="Karen">
-                <div class="project-overlay">
-                    <div class="project-title">Brooklyn Springs</div>
-                    <!-- <div class="project-count"><i class="bi bi-building"></i> 8 Projects</div> -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Runda Projects -->
-        <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="800">
-            <div class="project-card">
-                <img src="assets/images/grand.jpg" class="img-fluid" alt="Runda">
-                <div class="project-overlay">
-                    <div class="project-title">The Grand Palace</div>
-                    <!-- <div class="project-count"><i class="bi bi-building"></i> 5 Projects</div> -->
-                </div>
-            </div>
-        </div>
+        <?php endforeach; ?>
 
     </div>
 

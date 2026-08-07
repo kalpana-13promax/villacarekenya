@@ -1,9 +1,38 @@
+<?php
+require_once('includes/config.php');
+
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$blog_post = null;
+
+try {
+    $database = new db();
+    if ($id > 0) {
+        $res = $database->getQuery("SELECT * FROM tbl_blog WHERE id = $id");
+        if ($res) {
+            $blog_post = $res[0];
+        }
+    }
+    
+    // Fallback if not found or no ID
+    if (!$blog_post) {
+        $res = $database->getQuery("SELECT * FROM tbl_blog ORDER BY id DESC LIMIT 1");
+        if ($res) {
+            $blog_post = $res[0];
+        }
+    }
+} catch (Exception $e) {
+    // db failed
+}
+
+// Default image path
+$default_img = DOMAIN . 'assets/images/default.jpg';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VillaCare Kenya · Blog Details</title>
+    <title>VillaCare Kenya · <?php echo htmlspecialchars($blog_post ? $blog_post->blog_title : 'Blog Details'); ?></title>
     
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -263,55 +292,48 @@
         </div>
 
         <!-- Blog Card -->
+        <?php if ($blog_post): 
+            $blog_img = '';
+            if (!empty($blog_post->pro_image) && file_exists(__DIR__ . '/uploads/' . $blog_post->pro_image)) {
+                $blog_img = DOMAIN . 'uploads/' . $blog_post->pro_image;
+            } else {
+                $blog_img = $default_img;
+            }
+            $date_str = date('F d, Y', strtotime($blog_post->timestamps));
+            $author = !empty($blog_post->name) ? $blog_post->name : 'Sarah Johnson';
+            $category = !empty($blog_post->post) ? $blog_post->post : 'Insights';
+        ?>
         <div class="vc-blog-card" data-aos="fade-up">
             
             <!-- Meta Information -->
             <div class="vc-blog-meta">
-                <span><i class="bi bi-folder"></i> <span>Category:</span> Luxury Living</span>
-                <span><i class="bi bi-calendar3"></i> <span>Date:</span> February 15, 2026</span>
-                <span><i class="bi bi-person"></i> <span>By:</span> Sarah Johnson</span>
-                <span><i class="bi bi-chat"></i> <span>Comments:</span> 12</span>
+                <span><i class="bi bi-folder"></i> <span>Category:</span> <?php echo htmlspecialchars($category); ?></span>
+                <span><i class="bi bi-calendar3"></i> <span>Date:</span> <?php echo htmlspecialchars($date_str); ?></span>
+                <span><i class="bi bi-person"></i> <span>By:</span> <?php echo htmlspecialchars($author); ?></span>
+                <span><i class="bi bi-chat"></i> <span>Comments:</span> 0</span>
             </div>
 
             <!-- Title -->
-            <h1 class="vc-blog-title">The Future of Luxury Living in Nairobi</h1>
+            <h1 class="vc-blog-title"><?php echo htmlspecialchars($blog_post->blog_title); ?></h1>
 
             <!-- Featured Image -->
             <div class="vc-blog-image">
-                <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop" alt="Blog Image">
+                <img src="<?php echo htmlspecialchars($blog_img); ?>" alt="<?php echo htmlspecialchars($blog_post->blog_title); ?>">
             </div>
 
             <!-- Content -->
             <div class="vc-blog-content">
-                <p>Nairobi's luxury real estate market is experiencing a remarkable transformation. With new developments reshaping the city's skyline, the future of high-end living in Kenya's capital has never looked more promising. From sustainable architecture to smart home technology, here's what you need to know about the evolution of luxury living in Nairobi.</p>
-
-                <h2>The Rise of Sustainable Luxury</h2>
-                <p>Modern luxury homebuyers in Nairobi are increasingly prioritizing sustainability without compromising on comfort or style. Developers are responding by incorporating eco-friendly features such as solar panels, rainwater harvesting systems, and energy-efficient appliances. Properties in Karen, Runda, and other prestigious neighborhoods now often include green spaces, organic gardens, and sustainable building materials.</p>
-
-                <p>Today's luxury properties in Nairobi are becoming smarter than ever. Home automation systems that control lighting, security, climate, and entertainment are now standard in high-end developments. Voice-activated assistants, automated blinds, and smart security systems provide residents with unprecedented convenience and peace of mind.</p>
-
-                <h2>Prime Locations for Luxury Living</h2>
-                <p>While traditional luxury neighborhoods like Karen and Runda remain popular, new hotspots are emerging. Areas such as Westlands, Kilimani, and Riverside are attracting buyers with their convenient locations and modern developments. The demand for properties in these areas continues to grow as more people seek the perfect balance between urban convenience and residential tranquility.</p>
-
-                <ul>
-                    <li>Integrated shopping and dining experiences</li>
-                    <li>On-site fitness centers and spas</li>
-                    <li>Concierge services and 24/7 security</li>
-                    <li>Landscaped gardens and recreational areas</li>
-                </ul>
-
-                <p>Whether you're looking for a contemporary apartment in the heart of the city or a sprawling estate in the suburbs, Nairobi's luxury real estate market offers something for every discerning buyer. With new developments constantly raising the bar, the future of luxury living in Nairobi is bright indeed.</p>
+                <?php echo html_entity_decode($blog_post->blog, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
             </div>
 
             <!-- Tags -->
             <div class="vc-blog-tags">
                 <div class="vc-tags-title">Tags:</div>
                 <div class="vc-tags-list">
-                    <a href="#" class="vc-tag">Luxury Living</a>
-                    <a href="#" class="vc-tag">Nairobi Real Estate</a>
-                    <a href="#" class="vc-tag">Smart Homes</a>
-                    <a href="#" class="vc-tag">Sustainable Design</a>
-                    <a href="#" class="vc-tag">Property Investment</a>
+                    <a href="#" class="vc-tag"><?php echo htmlspecialchars($category); ?></a>
+                    <a href="#" class="vc-tag">Villacare Kenya</a>
+                    <a href="#" class="vc-tag">Real Estate</a>
+                    <a href="#" class="vc-tag">Property Development</a>
                 </div>
             </div>
 
@@ -327,6 +349,13 @@
             </div>
 
         </div>
+        <?php else: ?>
+        <div class="alert alert-warning text-center my-5" data-aos="fade-up">
+            <h4>No Blog Post Found</h4>
+            <p>Sorry, the blog article you are looking for could not be found.</p>
+            <a href="blog.php" class="btn btn-outline-primary mt-3">Back to Blog</a>
+        </div>
+        <?php endif; ?>
 
     </div>
 

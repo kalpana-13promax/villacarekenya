@@ -1,3 +1,50 @@
+<?php
+require_once('includes/config.php');
+
+$about_data = null;
+try {
+    $database = new db();
+    $res = $database->getQuery("SELECT * FROM tbl_about LIMIT 1");
+    if ($res) {
+        $about_data = $res[0];
+        
+        // Clean text placeholders to match Villacare Kenya branding
+        $about_data->heading = str_ireplace('Kothabadi', 'VillaCare Kenya', $about_data->heading);
+        $about_data->sub_heading = str_ireplace('Kothabadi', 'VillaCare Kenya', $about_data->sub_heading);
+        $about_data->message = str_ireplace('Kothabadi', 'VillaCare Kenya', $about_data->message);
+    }
+} catch (Exception $e) {
+    // db failed
+}
+
+// Fallback about data if DB is empty or fails
+if (!$about_data) {
+    $about_data = (object)[
+        'heading' => 'About Us',
+        'sub_heading' => 'Welcome to <span>VillaCare Kenya</span> &ndash; Your Trusted Real Estate Partner.',
+        'message' => '<p>At VillaCare Kenya, we are committed to transforming your real estate dreams into reality. Whether you\'re looking to buy, sell, rent, or invest, we offer personalized solutions tailored to your needs. With years of experience in the property market, we bring deep local expertise and industry insights to help you make confident decisions.</p><p>Our platform features verified listings, detailed property insights, and smart tools that make your search fast, easy, and reliable. From residential apartments to commercial spaces and investment projects, we connect you with the best properties in the right locations.</p><p>We believe in transparency, trust, and technology — and our team is dedicated to providing exceptional customer service, every step of the way.</p>',
+        'pro_image' => 'assets/images/default.jpg'
+    ];
+}
+
+// Auto-wrap "VillaCare Kenya" in <span> for two-tone gold color effect
+// Only wrap if not already wrapped
+if (!empty($about_data->sub_heading) && strpos($about_data->sub_heading, '<span>') === false) {
+    $decoded_sub = html_entity_decode($about_data->sub_heading, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $about_data->sub_heading = str_ireplace(
+        'VillaCare Kenya',
+        '<span>VillaCare Kenya</span>',
+        $decoded_sub
+    );
+}
+
+$about_img = '';
+if (!empty($about_data->pro_image) && (strpos($about_data->pro_image, 'http') === 0 || file_exists(__DIR__ . '/uploads/' . $about_data->pro_image))) {
+    $about_img = (strpos($about_data->pro_image, 'http') === 0) ? $about_data->pro_image : 'uploads/' . $about_data->pro_image;
+} else {
+    $about_img = DOMAIN . 'assets/images/default.jpg';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +109,7 @@
 
         .vc-hero-text h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 52px;
+            /* font-size: 52px; */
             font-weight: 700;
             margin-bottom: 25px;
             line-height: 1.2;
@@ -575,12 +622,14 @@
                 <div class="vc-hero-text" data-aos="fade-right">
                     <div class="vc-hero-tag">
                         <i class="bi bi-building"></i>
-                        <span>ABOUT VILLACARE KENYA</span>
+                        <span><?php echo html_entity_decode(!empty($about_data->heading) ? strtoupper($about_data->heading) : 'ABOUT VILLACARE KENYA', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></span>
                     </div>
                     
-                    <h1>Your Trusted Partner in <span>Real Estate</span></h1>
+                    <h1><?php echo html_entity_decode(!empty($about_data->sub_heading) ? $about_data->sub_heading : 'Your Trusted Partner in Real Estate', ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h1>
                     
-                    <p>VillaCare Kenya has been transforming the real estate landscape with premium properties, transparent dealings, and exceptional customer service since 2010.</p>
+                    <div class="vc-hero-text-content">
+                        <?php echo html_entity_decode($about_data->message, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?>
+                    </div>
                     
                     <div class="vc-hero-stats">
                         <div class="vc-stat-box">
@@ -599,7 +648,7 @@
                 </div>
                 
                 <div class="vc-hero-image" data-aos="fade-left">
-                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop" alt="VillaCare Kenya Property">
+                    <img src="<?php echo htmlspecialchars($about_img); ?>" alt="<?php echo htmlspecialchars($about_data->heading); ?>">
                     
                     <div class="vc-experience-badge">
                         <h2>15+</h2>
@@ -736,6 +785,8 @@
         <div class="vc-team-grid">
             
             <!-- Team Member 1 -->
+
+            
             <div class="vc-team-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="vc-team-img">
                     <img src="https://images.pexels.com/photos/3778680/pexels-photo-3778680.jpeg"
@@ -811,7 +862,7 @@
                         <i class="bi bi-telephone"></i>
                     </div>
                     <h3>Phone</h3>
-                    <p>+254 721 325 902<br>+254 711 789 012</p>
+                    <p>+254 721 325 902<br>+254 799 012318</p>
                 </div>
                 
                 <div class="vc-contact-card" data-aos="fade-up" data-aos-delay="200">
@@ -819,7 +870,7 @@
                         <i class="bi bi-envelope"></i>
                     </div>
                     <h3>Email</h3>
-                    <p>info@villacarekenya.com<br>sales@villacarekenya.com</p>
+                    <p>info@villacarekenya.com<br>info@villacarekenya.co.ke</p>
                 </div>
                 
                 <div class="vc-contact-card" data-aos="fade-up" data-aos-delay="300">

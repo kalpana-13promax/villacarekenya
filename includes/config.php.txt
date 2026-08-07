@@ -1,0 +1,83 @@
+<?php
+//error_reporting(~E_NOTICE);
+//error_reporting(E_ALL);
+error_reporting(0);
+ //ini_set('display_errors', 'off');
+
+
+define('WEBSITE', 'https://lotliterealtors.com/en/'); 
+
+define('HOSTS', 'localhost'); 
+define('USERNAME', 'root'); 
+define('PASSWORD', '');    
+define('DATABASE', 'demo_agent');    
+
+define('USER', 'lotlite99');  
+define('PASS', 'Lotyslando#100');  
+
+/* site config */
+define('SITENAME', 'IT WAYS'); 
+define('SLOGAN', 'Find your dream property.'); 
+define('CONTACT', '+91 7388 888852');
+define('EMAIL', 'info@lotliterealtors.com/'); 
+define('EMAIL_SALES', 'sales@lotliterealtors.com'); 
+
+define ('PMS_PRO', 'PMS Pro');
+
+define('CURRENCY', '&#8377;');
+
+define('C_CODE', '91');
+
+ 
+define('DOCROOT', dirname(__FILE__));
+
+ 
+
+/* load all classes */
+require_once('database.php');
+require_once('classes/project.php');
+require_once('classes/property.php');
+require_once('classes/property-type.php');
+require_once('classes/amenity.php');
+require_once('classes/lead.php');
+require_once('classes/agents.php');
+require_once('classes/admin.php');
+require_once('classes/message.php');
+require_once('classes/client.php');
+require_once('classes/owner.php');
+
+require_once('classes/masters.php');
+require_once('classes/advertisement.php');
+require_once('classes/notice.php');
+require_once('classes/ploting.php');
+require_once('classes/payment.php');
+require_once('classes/emi.php');
+require_once('classes/agreement.php');
+require_once('classes/setting.php');
+require_once('classes/to-do.php');
+require_once('classes/leads-color-mark.php');
+require_once('classes/expenses.php');
+
+require_once('classes/lead-status.php');
+require_once('classes/template.php');
+require_once('classes/task.php');
+
+
+
+spl_autoload_register(function($class) {
+   // include 'classes/' . $class . '.class.php';
+        $filename = DOCROOT . "/classes/" . strtolower($class) . ".php";
+    if ( file_exists($filename) )
+    {
+        include_once $filename;
+    }
+});
+
+
+/* login user data */
+$boj = new itways();
+$getuserdata = $boj->userdata();
+
+
+
+?>

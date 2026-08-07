@@ -1,0 +1,48 @@
+<?php
+
+class agreement extends db
+{
+	
+	function agreement_add (){
+	$array = array(
+		'document_name' => $_POST['doc'],
+		'property_id' => $_POST['p_id'],
+		'uploader' => $_POST['uploader']
+	);
+	print_r($array);
+	//die;
+	//$data = $this->insert_query('client', $array);
+	$data=1;
+	session_start();
+                 
+        
+		if( $data ){
+			$_SESSION['suc'] = 'Document Added Successfully';
+
+		}else{
+			$_SESSION['fal'] = 'Oops! not insert, Something wrong or Duplicate Record Found!' . $_POST['lead_name'];
+
+		}
+		header("location: ?nav=clients");
+		die;
+	}
+    
+
+    
+    
+
+
+}
+	
+
+
+
+
+if(isset($_POST['agreement-add'])){
+	$obj = new agreement();
+	$obj->agreement_add ();
+}
+
+
+
+?>

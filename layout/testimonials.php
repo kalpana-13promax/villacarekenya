@@ -1,40 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once (__DIR__ . '/../includes/config.php');
+$testimonials = $boj->getQuery('
+    SELECT * FROM tbl_testimonial
+    ORDER BY id DESC
+');
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HassConsult · Testimonials Slider</title>
+// Default image path
+$default_img = DOMAIN . 'assets/images/default.jpg';
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+?>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+<!-- Fonts -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
 
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<!-- AOS CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-        }
-
+<style>
         /* ===== TESTIMONIAL SECTION ===== */
         .testimonial-section {
             background: #f8f6f4;
@@ -448,6 +440,51 @@
             <div class="swiper testimonial-swiper" data-aos="fade-up" data-aos-delay="200">
                 <div class="swiper-wrapper">
 
+                    <?php
+                    if (!empty($testimonials)):
+                        foreach ($testimonials as $idx => $t):
+                            $client_img = '';
+                            if (!empty($t->pro_image) && file_exists(__DIR__ . '/../uploads/' . $t->pro_image)) {
+                                $client_img = DOMAIN . 'uploads/' . $t->pro_image;
+                            } else {
+                                $client_img = $default_img;
+                            }
+                            $is_featured = ($idx % 2 === 0);
+                            $card_class = $is_featured ? 'featured' : '';
+                            $post = !empty($t->testimonial_client_post) ? $t->testimonial_client_post : 'Client';
+                            ?>
+                    <!-- Dynamic Slide <?php echo $t->id; ?> -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card <?php echo $card_class; ?>">
+                            <div class="quote-icon">"</div>
+                            <div class="client-rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                            </div>
+                            <p class="testimonial-text">
+                                "<?php echo htmlspecialchars($t->testimonial_message); ?>"
+                            </p>
+                            <div class="client-info">
+                                <div class="client-img">
+                                    <img src="<?php echo htmlspecialchars($client_img); ?>" alt="<?php echo htmlspecialchars($t->testimonial_name); ?>">
+                                </div>
+                                <div class="client-details">
+                                    <h4><?php echo htmlspecialchars($t->testimonial_name); ?></h4>
+                                    <p><?php echo htmlspecialchars($post); ?></p>
+                                    <div class="client-location">
+                                        <i class="bi bi-geo-alt-fill"></i> Nairobi, Kenya
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                        endforeach;
+                    else:
+                        ?>
                     <!-- Slide 1 - Featured -->
                     <div class="swiper-slide">
                         <div class="testimonial-card featured">
@@ -511,102 +548,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Slide 3 -->
-                    <div class="swiper-slide">
-                        <div class="testimonial-card">
-                            <div class="quote-icon">"</div>
-                            <div class="client-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <p class="testimonial-text">
-                                "We were searching for a secure and modern family home in Karen, and Villacare Kenya
-                                delivered beyond expectations. The attention to detail, finishing quality, and customer
-                                service were outstanding."
-                            </p>
-                            <div class="client-info">
-                                <div class="client-img">
-                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop"
-                                        alt="Elizabeth Wanjiku">
-                                </div>
-                                <div class="client-details">
-                                    <h4>Elizabeth Wanjiku</h4>
-                                    <p>Homeowner</p>
-                                    <div class="client-location">
-                                        <i class="bi bi-geo-alt-fill"></i> Coco | Brookside
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 4 -->
-                    <div class="swiper-slide">
-                        <div class="testimonial-card">
-                            <div class="quote-icon">"</div>
-                            <div class="client-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <p class="testimonial-text">
-                                "Buying property in Upperhill felt overwhelming at first, but Villacare Kenya simplified
-                                every step. Their legal support, valuation advice, and project updates made the
-                                experience stress-free."
-                            </p>
-                            <div class="client-info">
-                                <div class="client-img">
-                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop"
-                                        alt="David Kimani">
-                                </div>
-                                <div class="client-details">
-                                    <h4>David Kimani</h4>
-                                    <p>Homeowner</p>
-                                    <div class="client-location">
-                                        <i class="bi bi-geo-alt-fill"></i> Pembe | Upperhill
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Slide 5 -->
-                    <div class="swiper-slide">
-                        <div class="testimonial-card featured">
-                            <div class="quote-icon">"</div>
-                            <div class="client-rating">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                            </div>
-                            <p class="testimonial-text">
-                                "As a first-time homebuyer, I appreciated how Villacare Kenya explained every detail
-                                clearly. They guided me through financing options and helped me secure a beautiful
-                                apartment in Kilimani."
-                            </p>
-                            <div class="client-info">
-                                <div class="client-img">
-                                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"
-                                        alt="Jane Muthoni">
-                                </div>
-                                <div class="client-details">
-                                    <h4>Jane Muthoni</h4>
-                                    <p>First-time Buyer</p>
-                                    <div class="client-location">
-                                        <i class="bi bi-geo-alt-fill"></i> Nouveau | Lenana
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endif; ?>
 
                 </div>
 
@@ -686,6 +628,3 @@
             },
         });
     </script>
-</body>
-
-</html>

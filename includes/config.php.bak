@@ -1,0 +1,59 @@
+<?php
+//error_reporting(~E_NOTICE);
+//error_reporting(E_ALL);
+//error_reporting(0);
+
+/* database */
+define('HOSTS', 'localhost'); 
+define('USERNAME', 'root'); 
+define('PASSWORD', 'Root@1234##$$'); 
+define('DATABASE', 'ploting'); 
+
+
+/* site config */
+define('SITENAME', 'SAATHIREALTY'); 
+define('LOGO', 'Sathi-Logo-Dark.png');
+define('SLOGAN', 'YOUR SEARCH ENDS HERE'); 
+define('CONTACT', '+91 90049 72140');
+define('EMAIL', 'info@saathirealty.com'); 
+define('EMAIL_SALES', 'sales@saathirealty.com'); 
+define('DOCROOT', dirname(__FILE__));
+
+define('CURRENCY', '&#8377; ');
+
+
+/* load all classes */
+require_once('database.php');
+require_once('classes/project.php');
+require_once('classes/property.php');
+require_once('classes/property-type.php');
+require_once('classes/amenity.php');
+require_once('classes/lead.php');
+require_once('classes/agents.php');
+require_once('classes/admin.php');
+require_once('classes/mlm-agents.php');
+require_once('classes/client.php');
+require_once('classes/masters.php');
+require_once('classes/advertisement.php');
+require_once('classes/notice.php');
+
+
+
+spl_autoload_register(function($class) {
+   // include 'classes/' . $class . '.class.php';
+        $filename = DOCROOT . "/classes/" . strtolower($class) . ".php";
+    if ( file_exists($filename) )
+    {
+        include_once $filename;
+    }
+});
+
+
+/* login user data */
+$boj = new itways();
+$getuserdata = $boj->userdata();
+
+
+
+
+?>

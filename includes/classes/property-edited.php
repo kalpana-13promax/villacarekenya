@@ -1,0 +1,366 @@
+<?php
+
+class product extends db
+{
+
+	function add_property(){
+
+		$uploads_dir2  = '../uploads';
+		if(!empty($_FILES["property_image"]["tmp_name"])){
+		  	$tmp_name2 	 = $_FILES["property_image"]["tmp_name"];
+		  	$temp2 		 = explode(".", $_FILES["property_image"]["name"]);
+		  	$name =       time().'.'.end($temp2);
+		  	move_uploaded_file($tmp_name2, "$uploads_dir2/$name");
+		  
+		}else{
+
+			$name = '';
+		}
+
+		
+		$i=0;
+		$galleryimage = array();
+		if(!empty($_FILES["gallery_image"]["tmp_name"])){
+			foreach($_FILES["gallery_image"]["tmp_name"] as $key=>$tmp_name) { $i++;
+			  	$tmp_name3 	 = $_FILES["gallery_image"]["tmp_name"][$key];
+			  	$temp3 		 = explode(".", $_FILES["gallery_image"]["name"][$key]);
+			  	$gallery_image = 'gal_'.$i.'_'.time().'.'.end($temp3);
+			  	move_uploaded_file($tmp_name3, "$uploads_dir2/$gallery_image");
+					array_push($galleryimage, $gallery_image);
+			}	
+			$gallery_images =  json_encode($galleryimage);
+		}else{
+
+			$gallery_images = '';
+		}
+
+
+		$allIds 	= explode(',',$_POST['allIds']);
+		$attributinfo  = array();
+		foreach ($allIds as $value) {
+		 	$field_type 	= $_POST['field_type_'.$value];
+			$info = array('field_id'=>$value,'field_type_value'=>$field_type);
+			array_push($attributinfo,$info);
+		}
+		$attributinfo_new = json_encode($attributinfo); 
+
+       
+	
+
+		$allIds 	= $_POST['field_type'];
+		$property_title 	= $this->sanitize($_POST['property_title']);
+		$project 			= $_POST['project'];
+		$available_for 		= $_POST['available_for'];
+		$property_type 		= $_POST['property_type'];
+		$refer_id 			= $_POST['refer_id'];
+		$agent_id 			=  $_POST['agent_id'];;
+		$landlord_name      = $this->sanitize($_POST['landlord_name']);
+		$landlord_contact   = $this->int($_POST['landlord_contact']);
+		$property_price		= $this->int($_POST['property_price']);
+		$location	    	= $this->sanitize($_POST['property_location']);
+		$zip_code    		= $this->int($_POST['zip_code']);
+		$status    	    	= $_POST['status'];
+		$uploader    	    	= $_POST['uploader'];
+
+		echo $refer_id;
+		echo $agent_id; 
+		die;
+		if(isset($_POST['feature_property'])){
+			$feature_property   = $_POST['feature_property'];
+		}else{
+			$feature_property   = '2';
+		}
+		
+		
+		if(isset($_POST['amenities'])){
+        	$amenities =  implode(",",$_POST['amenities']);
+		}else{
+			$amenities =  '';
+		}
+		$description 	= $this->sanitize($_POST['description']);
+ 
+         
+		$data = $this->mysqli->query("INSERT INTO property_listing ( property_title, project_type, available_for, property_type, property_attribute, reference_source, referance_agent, landlord_name, landlord_contact, property_price, property_amenities, property_image, gallery_image, property_description, zip_code, property_location, feature_property, status, uploader ) 
+		values 
+		('$property_title', '$project', '$available_for', '$property_type', '$attributinfo_new', '$refer_id', '$agent_id', '$landlord_name', '$landlord_contact', '$property_price', '$amenities', '$name', '$gallery_images', '$description', '$zip_code', '$location', '$feature_property', '$status', '$uploader') "); 
+
+
+		session_start();
+
+		if( $data ){
+			$_SESSION['suc'] = 'Property created successfully';
+
+		}
+		else{
+			$_SESSION['fal'] = ' Sorry Something went wrong';
+
+		}
+
+
+		
+	}
+
+
+	function edit_property_info(){
+		$id = $_GET['edit'];
+	
+		$imgqry = $this->mysqli->query("SELECT * FROM property_listing where id ='$id' ");
+		$r_data = $imgqry->fetch_assoc();
+		
+		$uploads_dir2  = '../uploads';
+		if(!empty($_FILES["property_image"]["tmp_name"])){
+		  	$tmp_name2 	 = $_FILES["property_image"]["tmp_name"];
+		  	$temp2 		 = explode(".", $_FILES["property_image"]["name"]);
+		  	$property_image =       time().'.'.end($temp2);
+		  	move_uploaded_file($tmp_name2, "$uploads_dir2/$property_image");
+		  
+		}else{
+
+			$property_image = $r_data['property_image'];
+		}
+		
+		
+		$i=0;
+		if($r_data['gallery_image'])
+		{
+			$galleryimage = json_decode($r_data['gallery_image']);
+		}else{
+			$galleryimage = array();
+		}
+
+		if(!empty($_FILES["gallery_image"]["tmp_name"][0])){			
+			foreach($_FILES["gallery_image"]["tmp_name"] as $key=>$tmp_name) { $i++;
+			  	$tmp_name3 	 = $_FILES["gallery_image"]["tmp_name"][$key];
+			  	$temp3 		 = explode(".", $_FILES["gallery_image"]["name"][$key]);
+			  	$gallery_image = 'gal_'.$i.'_'.time().'.'.end($temp3);
+			  	move_uploaded_file($tmp_name3, "$uploads_dir2/$gallery_image");
+					array_push($galleryimage, $gallery_image);
+			}
+		}
+		$gallery_images =  json_encode($galleryimage);
+		
+		
+		$allIds 	= explode(',',$_POST['allIds']);
+		$attributinfo  = array();
+		foreach ($allIds as $value) {
+		 	$field_type 	= $_POST['field_type_'.$value];
+			$info = array('field_id'=>$value,'field_type_value'=>$field_type);
+			array_push($attributinfo,$info);
+		}
+		$attributinfo_new = json_encode($attributinfo); 
+		
+		$allIds 	= $_POST['field_type'];
+
+		$property_title 	= $this->sanitize($_POST['property_title']);
+		$project 			= $_POST['project'];
+		$available_for 		= $_POST['available_for'];
+		$property_type 		= $_POST['property_type'];
+		//$refer_id 			= $_POST['refer_id'];
+		$agent_id 			= $_POST['agent_id'];
+		
+		$landlord_name      = $this->sanitize($_POST['landlord_name']);  
+		$landlord_contact   = $this->int($_POST['landlord_contact']);  
+		
+		$property_price		= $this->int($_POST['property_price']);
+		$deposit		= $this->int($_POST['deposit']);
+
+		$location	    	= $this->sanitize($_POST['property_location']);
+		$zip_code    		= $this->int($_POST['zip_code']);
+		if(isset($_POST['feature_property'])){
+			$feature_property   = $_POST['feature_property'];
+		}else{
+			$feature_property   = '2';
+		}
+		if(isset($_POST['refer_id'])){
+			$refer_id   = $_POST['refer_id'];
+		}else{
+			$refer_id   = '0';
+		}
+		
+		
+		if(isset($_POST['amenities'])){
+        	$amenities =  implode(",",$_POST['amenities']);
+		}else{
+			$amenities =  '';
+		}
+		$description 	= $_POST['description'];
+		$status         =   $_POST['status'];
+		
+ 
+		//echo "<pre>"; print_r($attributinfo_new); die;
+		
+		$query = "Update property_listing 
+			SET property_title='$property_title', 
+				project_type='$project',
+				property_image='$property_image',
+				gallery_image='$gallery_images',
+				available_for='$available_for', 
+				property_type='$property_type',
+				property_attribute='$attributinfo_new',
+				reference_source='$refer_id',
+				referance_agent='$agent_id', 
+				landlord_name='$landlord_name',
+				landlord_contact='$landlord_contact',
+				property_price='$property_price', 
+				deposit='$deposit', 
+				property_amenities='$amenities',				 
+				property_description='$description',
+				zip_code='$zip_code',
+				property_location='$location', 
+				feature_property='$feature_property',
+				status='$status'
+				Where id = '$id'
+				";
+				 //print_r($query);
+				//die;
+		$data = $this->mysqli->query($query); 
+		//echo $query; die;
+		session_start();
+
+		if( $data ){
+			$_SESSION['suc'] = 'Property Update successfully';
+
+		}
+		else{
+			$_SESSION['fal'] = ' Sorry Something went wrong';
+
+		}
+
+
+		
+	}
+	
+	function delete_image(){
+		$id = $_GET['edit'];
+		$image = $_GET['image'];
+		$imgqry = $this->mysqli->query("SELECT * FROM property_listing where id ='$id' ");
+		$r_data = $imgqry->fetch_assoc();
+		
+		if($r_data['gallery_image'])
+		{
+			$galleryimage = json_decode($r_data['gallery_image']);
+			$final_array= array();
+			foreach($galleryimage as $img)
+			{
+				if($img!=$image)
+				{
+				array_push($final_array, $img);
+				}
+			}
+			
+			$gallery_images =  json_encode($final_array);
+			$query = "Update property_listing 
+			SET gallery_image='$gallery_images'
+				Where id = '$id'
+				";
+				$data = $this->mysqli->query($query); 
+				
+				session_start();
+				if( $data ){ 
+					$_SESSION['suc'] = 'Image Deleted successfully';
+				}
+				else{
+					$_SESSION['fal'] = ' Sorry Something went wrong';
+
+				} 
+		}else{
+			$_SESSION['fal'] = ' Sorry Something went wrong';
+		}
+		
+		
+	}
+
+	function bookProperty(){
+		
+		$booking_id=uniqid();
+
+       $array=array(
+	   'booked_to'=>$_POST['client_id'],
+	   'booked_by'=>$_POST['username'],
+	   'booking_id'=>$booking_id,
+	   'status'=>'2',
+	   'deal_price'=>$_POST['deal_amount']
+	);
+	$where = "id =".$_POST['property_id'];
+	
+		/*$property_id 					= $_POST['property_id'];
+		$client_id 						= $_POST['client_id'];
+		$agent_id 						= $_POST['agent_id'];
+		$deal_amount 					= $_POST['deal_amount'];
+		//$commission_first_agent 		= $_POST['commission_first_agent'];
+		//$commission_second_agent 		= $_POST['commission_second_agent'];
+		//$description 					= $_POST['description'];
+		//$status 						= '1';*/
+
+		$data = $this->update_query('property_listing',$array,$where);
+		
+         session_start();
+		if( $data ){
+			 
+			
+			$_SESSION['suc'] = 'Booked successfully with booking Id :'.$booking_id;
+
+		}
+		else{
+			$_SESSION['fal'] = ' Sorry Something went wrong';
+
+		}
+		header("location: booking-property.php?nav=leads&id=". $_POST['property_id']);
+				die;
+
+	}
+
+
+	function addAmount(){
+
+		$property_id 		= $_POST['property_id'];
+		$client_id 			= $_POST['client_id'];
+		$add_payment 		= $_POST['add_payment'];
+		$description 		= $_POST['description'];
+		$payment_by 	    = 'admin';
+		$payment_method 	= $_POST['payment_method'];
+		$transection_id 	= $_POST['transection_id'];
+		$patment_reminder 	= $_POST['patment_reminder'];
+
+		$data = $this->mysqli->query("INSERT INTO payment_details ( property_id, client_id, amount, comments, payment_by, 	payment_mode, transection_id, payment_reminder)
+
+			values
+
+			('$property_id', $client_id, $add_payment, '$description', '$payment_by', '$payment_method', '$transection_id', '$patment_reminder') "); 
+
+		if( $data ){
+			$_SESSION['suc'] = 'Amount Added successfully';
+		}else{
+			$_SESSION['fal'] = ' Sorry Something went wrong';
+		}
+	}
+
+}
+	
+
+
+if(isset($_POST['add_property'])){
+	$obj = new product();
+	$obj->add_property ();
+}
+
+if(isset($_POST['edit_property_info'])){
+	$obj = new product();
+	$obj->edit_property_info();
+}
+
+if(isset($_GET['image']) && !isset($_POST['edit_property_info'])){
+	$obj = new product();
+	$obj->delete_image();
+}
+
+if(isset($_POST['book_property'])){
+	$obj = new product();
+	$obj->bookProperty();
+}
+
+if(isset($_POST['add_amount'])){
+	$obj = new product();
+	$obj->addAmount();
+}
+?>

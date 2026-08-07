@@ -295,9 +295,36 @@
             </div>
             
             <!-- Properties Grid -->
-            <?php include __DIR__ . '/../config/properties.php'; ?>
+            <?php
+            include __DIR__ . '/../config/properties.php';
+
+            $props = array_values($properties);
+            $p1 = isset($props[0]) ? $props[0] : null;
+            $p2 = isset($props[1]) ? $props[1] : null;
+            $p3 = isset($props[2]) ? $props[2] : null;
+            ?>
             <div class="row g-4 g-lg-5">
-                <!-- CARD 1: Lavington Family Villa -->
+                <!-- CARD 1: Dynamic Single Image Card -->
+                <?php if ($p1): ?>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+                    <div class="feature-card">
+                        <div class="feature-img">
+                            <img src="<?php echo htmlspecialchars($p1['featured_image']); ?>" alt="<?php echo htmlspecialchars($p1['title']); ?>" loading="lazy">
+                        </div>
+                        <div class="feature-content">
+                            <h3><?php echo htmlspecialchars($p1['title']); ?></h3>
+                            <p>
+                                <?php
+                                $desc1 = !empty($p1['description']) ? $p1['description'] : 'Experience the perfect blend of comfort and style in this stunning property. Contact us for more details and to schedule a viewing.';
+                                echo htmlspecialchars(mb_strimwidth($desc1, 0, 160, '...'));
+                                ?>
+                            </p>
+                            <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $p1['id']; ?>" class="feature-btn">VIEW DETAILS</a>
+                        </div>
+                    </div>
+                </div>
+                <?php else: ?>
+                <!-- Fallback: Lavington Family Villa -->
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
                     <div class="feature-card">
                         <div class="feature-img">
@@ -312,8 +339,49 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
 
-                <!-- CARD 2: Prime Nairobi Apartments -->
+                <!-- CARD 2: Dynamic Collage Grid Card -->
+                <?php
+                if ($p2):
+                    $collage_fallbacks = [
+                        'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
+                        'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop'
+                    ];
+                    $p2_images = [];
+                    if (!empty($p2['gallery'])) {
+                        $p2_images = array_values($p2['gallery']);
+                    }
+                    for ($i = count($p2_images); $i < 4; $i++) {
+                        $p2_images[] = $collage_fallbacks[$i];
+                    }
+                    ?>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="200">
+                    <div class="feature-card">
+                        <div class="feature-img">
+                            <div class="collage-grid">
+                                <img src="<?php echo htmlspecialchars($p2_images[0]); ?>" alt="<?php echo htmlspecialchars($p2['title']); ?>" loading="lazy">
+                                <img src="<?php echo htmlspecialchars($p2_images[1]); ?>" alt="<?php echo htmlspecialchars($p2['title']); ?>" loading="lazy">
+                                <img src="<?php echo htmlspecialchars($p2_images[2]); ?>" alt="<?php echo htmlspecialchars($p2['title']); ?>" loading="lazy">
+                                <img src="<?php echo htmlspecialchars($p2_images[3]); ?>" alt="<?php echo htmlspecialchars($p2['title']); ?>" loading="lazy">
+                            </div>
+                        </div>
+                        <div class="feature-content">
+                            <h3><?php echo htmlspecialchars($p2['title']); ?></h3>
+                            <p>
+                                <?php
+                                $desc2 = !empty($p2['description']) ? $p2['description'] : 'Experience the perfect blend of comfort and style in this stunning property. Contact us for more details and to schedule a viewing.';
+                                echo htmlspecialchars(mb_strimwidth($desc2, 0, 160, '...'));
+                                ?>
+                            </p>
+                            <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $p2['id']; ?>" class="feature-btn">VIEW DETAILS</a>
+                        </div>
+                    </div>
+                </div>
+                <?php else: ?>
+                <!-- Fallback: Prime Nairobi Apartments -->
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="200">
                     <div class="feature-card">
                         <div class="feature-img">
@@ -336,18 +404,24 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
 
-                <!-- CARD 3: Beachfront Property (dynamic from config -> ID 10) -->
-                <?php if (isset($properties[10])): $bp = $properties[10]; ?>
+                <!-- CARD 3: Dynamic Single Image Card -->
+                <?php if ($p3): ?>
                 <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="300">
                     <div class="feature-card">
                         <div class="feature-img">
-                            <img src="<?php echo htmlspecialchars(!empty($bp['gallery'][0]) ? $bp['gallery'][0] : $bp['featured_image']); ?>" alt="<?php echo htmlspecialchars($bp['title']); ?>" loading="lazy">
+                            <img src="<?php echo htmlspecialchars($p3['featured_image']); ?>" alt="<?php echo htmlspecialchars($p3['title']); ?>" loading="lazy">
                         </div>
                         <div class="feature-content">
-                            <h3><?php echo htmlspecialchars($bp['title']); ?></h3>
-                            <p><?php echo htmlspecialchars($bp['description']); ?></p>
-                            <a href="property-details.php?id=<?php echo $bp['id']; ?>" class="feature-btn">VIEW DETAILS</a>
+                            <h3><?php echo htmlspecialchars($p3['title']); ?></h3>
+                            <p>
+                                <?php
+                                $desc3 = !empty($p3['description']) ? $p3['description'] : 'Experience the perfect blend of comfort and style in this stunning property. Contact us for more details and to schedule a viewing.';
+                                echo htmlspecialchars(mb_strimwidth($desc3, 0, 160, '...'));
+                                ?>
+                            </p>
+                            <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $p3['id']; ?>" class="feature-btn">VIEW DETAILS</a>
                         </div>
                     </div>
                 </div>
@@ -398,7 +472,6 @@
             AOS.refresh();
         });
     </script>
-
 
 </body>
 

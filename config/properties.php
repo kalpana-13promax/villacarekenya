@@ -1,323 +1,284 @@
 <?php
-// Property Data Database
-$properties = [
-    1 => [
-        'id' => 1,
-        'title' => '2 Bedroom Apartment',
-        'location' => 'Kilimani, Nairobi',
-        'price' => '90,000',
-        'price_display' => 'Ksh.90,000/Month',
-        'type' => 'APARTMENT',
-        'badge' => 'FOR RENT',
-        'beds' => 2,
-        'baths' => 2,
-        'size' => '85 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Beautiful 2-bedroom apartment in the heart of Kilimani. Fully furnished with modern amenities and stunning views of the city.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Fully Fenced',
-            'Gated Access',
-            'High-Speed WiFi',
-            'Parking',
-        ],
-        'agent' => 'VillaCare Kenya',
-        'posted' => '3 months ago',
-    ],
-    2 => [
-        'id' => 2,
-        'title' => '3 Bedroom Apartment',
-        'location' => 'Kileleshwa, Nairobi',
-        'price' => '280,000',
-        'price_display' => 'Ksh.280,000/Month',
-        'type' => 'FURNISHED',
-        'badge' => 'FOR RENT',
-        'beds' => 3,
-        'baths' => 4,
-        'size' => '120 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Luxury 3-bedroom furnished apartment in Kileleshwa. Premium finishes, spacious layout, and excellent location.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Fully Fenced',
-            'Gated Access',
-            'High-Speed WiFi',
-            'Parking',
-            'Swimming Pool',
-            'Gym',
-        ],
-        'agent' => 'Admin',
-        'posted' => '5 months ago',
-    ],
-    3 => [
-        'id' => 3,
-        'title' => 'Modern Apartment',
-        'location' => 'Kilimani, Nairobi',
-        'price' => '150,000',
-        'price_display' => 'Ksh.150,000/Month',
-        'type' => 'APARTMENT',
-        'badge' => 'FOR RENT',
-        'beds' => 2,
-        'baths' => 2,
-        'size' => '95 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Modern 2-bedroom apartment with contemporary design. Perfect for professionals and small families.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Fully Fenced',
-            'Gated Access',
-            'High-Speed WiFi',
-            'Parking',
-        ],
-        'agent' => 'VillaCare Kenya',
-        'posted' => '5 months ago',
-    ],
-    4 => [
-        'id' => 4,
-        'title' => 'Luxury Flat',
-        'location' => 'Westlands, Nairobi',
-        'price' => '120,000',
-        'price_display' => 'Ksh.120,000/Month',
-        'type' => 'APARTMENT',
-        'badge' => 'FOR RENT',
-        'beds' => 2,
-        'baths' => 2,
-        'size' => '80 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Luxury flat in prestigious Westlands area. High-end finishes and prime location.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Fully Fenced',
-            'Gated Access',
-            'High-Speed WiFi',
-            'Parking',
-            'Concierge Service',
-        ],
-        'agent' => 'Admin',
-        'posted' => '1 month ago',
-    ],
-    5 => [
-        'id' => 5,
-        'title' => '4 Bedroom Villa',
-        'location' => 'Karen, Nairobi',
-        'price' => '12.5M',
-        'price_display' => 'Ksh.12.5M',
-        'type' => 'VILLA',
-        'badge' => 'FOR SALE',
-        'beds' => 4,
-        'baths' => 3,
-        'size' => '450 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Stunning 4-bedroom villa in prestigious Karen area. Spacious grounds, modern architecture, and luxury finishes.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Fully Fenced',
-            'Gated Access',
-            'Swimming Pool',
-            'Home Gym',
-            'Parking',
-            'Garden',
-        ],
-        'agent' => 'VillaCare Kenya',
-        'posted' => '2 weeks ago',
-    ],
-    6 => [
-        'id' => 6,
-        'title' => 'Penthouse',
-        'location' => 'Westlands, Nairobi',
-        'price' => '180,000',
-        'price_display' => 'Ksh.180,000/Month',
-        'type' => 'PENTHOUSE',
-        'badge' => 'FOR RENT',
-        'beds' => 3,
-        'baths' => 3,
-        'size' => '200 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Exclusive penthouse with panoramic city views. Premium finishes and state-of-the-art amenities.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Fully Fenced',
-            'Gated Access',
-            'High-Speed WiFi',
-            'Parking',
-            'Rooftop Terrace',
-            'Premium Concierge',
-        ],
-        'agent' => 'Admin',
-        'posted' => '1 week ago',
-    ],
-    7 => [
-        'id' => 7,
-        'title' => 'Studio Apartment',
-        'location' => 'Parklands, Nairobi',
-        'price' => '45,000',
-        'price_display' => 'Ksh.45,000/Month',
-        'type' => 'APARTMENT',
-        'badge' => 'FOR RENT',
-        'beds' => 1,
-        'baths' => 1,
-        'size' => '45 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1587555172864-b1b51dd97e12?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1587555172864-b1b51dd97e12?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Compact and affordable studio apartment in Parklands. Perfect for young professionals and students.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Gated Access',
-            'WiFi',
-            'Parking',
-        ],
-        'agent' => 'VillaCare Kenya',
-        'posted' => '2 weeks ago',
-    ],
-    8 => [
-        'id' => 8,
-        'title' => 'Modern Villa',
-        'location' => 'Runda, Nairobi',
-        'price' => '26.5M',
-        'price_display' => 'Ksh.26.5M',
-        'type' => 'VILLA',
-        'badge' => 'FOR SALE',
-        'beds' => 5,
-        'baths' => 4,
-        'size' => '650 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1600585154504-c1f0d03d7ef6?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1600585154504-c1f0d03d7ef6?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Luxurious 5-bedroom villa in exclusive Runda area. Contemporary design with premium amenities and beautiful gardens.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Fully Fenced',
-            'Gated Access',
-            'Swimming Pool',
-            'Home Gym',
-            'Parking',
-            'Garden',
-            'Home Theater',
-        ],
-        'agent' => 'Admin',
-        'posted' => '3 weeks ago',
-    ],
-    9 => [
-        'id' => 9,
-        'title' => '2 Bedroom Town House',
-        'location' => 'Langata, Nairobi',
-        'price' => '210,000',
-        'price_display' => 'Ksh.210,000/Month',
-        'type' => 'TOWNHOUSE',
-        'badge' => 'FOR RENT',
-        'beds' => 2,
-        'baths' => 2,
-        'size' => '110 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Modern 2-bedroom townhouse in peaceful Langata. Ideal for families looking for a quiet residential area.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Fully Fenced',
-            'Gated Access',
-            'High-Speed WiFi',
-            'Parking',
-            'Small Garden',
-        ],
-        'agent' => 'VillaCare Kenya',
-        'posted' => '10 days ago',
-    ],
-    10 => [
-        'id' => 10,
-        'title' => 'Beachfront Property',
-        'location' => 'Malindi, Kenya',
-        'price' => '18.9M',
-        'price_display' => 'Ksh.18.9M',
-        'type' => 'VILLA',
-        'badge' => 'FOR SALE',
-        'beds' => 3,
-        'baths' => 3,
-        'size' => '380 sq.m',
-        'featured_image' => 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop',
-        'gallery' => [
-            'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?q=80&w=1200&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop',
-        ],
-        'description' => 'Stunning beachfront villa in Malindi with direct beach access. Perfect vacation home or investment property with stunning ocean views.',
-        'amenities' => [
-            'Water Connection',
-            'Electricity',
-            'Beachfront Access',
-            'Gated Access',
-            'Swimming Pool',
-            'Parking',
-            'Garden',
-            'BBQ Area',
-        ],
-        'agent' => 'Admin',
-        'posted' => '1 month ago',
-    ],
+
+$properties = [];
+
+$fallback_images = [
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop'
 ];
+
+if (!isset($boj)) {
+    require_once (__DIR__ . '/../includes/config.php');
+}
+
+/*
+ * ----------------------------------------------------
+ * Amenities lookup
+ * ----------------------------------------------------
+ */
+
+$amenities = [];
+
+$rows = $boj->getQuery('
+SELECT id,amenity_name
+FROM amenity
+');
+
+if ($rows) {
+    foreach ($rows as $r) {
+        $amenities[$r->id] = $r->amenity_name;
+    }
+}
+
+/*
+ * ----------------------------------------------------
+ * Main Property Query
+ * ----------------------------------------------------
+ */
+
+$sql = "
+
+SELECT
+
+p.*,
+
+pt.type as property_type_name,
+
+c.city as city_name,
+
+l.location as location_name
+
+FROM property_listing p
+
+LEFT JOIN property_type pt
+ON pt.id=p.category
+
+LEFT JOIN city c
+ON c.id=p.city
+
+LEFT JOIN locations l
+ON l.id=p.location
+
+WHERE p.status!='7'
+
+ORDER BY p.id DESC
+
+";
+
+$data = $boj->getQuery($sql);
+
+if ($data) {
+    foreach ($data as $row) {
+        $category = !empty($row->property_type_name)
+            ? $row->property_type_name
+            : 'Property';
+
+        $location = '';
+
+        if (!empty($row->location_name))
+            $location = $row->location_name;
+
+        if (!empty($row->city_name)) {
+            if ($location != '')
+                $location .= ', ' . $row->city_name;
+            else
+                $location = $row->city_name;
+        }
+
+        if (empty($location))
+            $location = $row->address;
+
+        if (empty($location))
+            $location = 'Nairobi';
+
+        /*
+         * -----------------------
+         * Sale / Rent
+         * -----------------------
+         */
+
+        $badge = 'FOR SALE';
+
+        $rent = false;
+
+        if (stripos($row->available_for, 'rent') !== false ||
+                stripos($row->available_for, 'lease') !== false) {
+            $badge = 'FOR RENT';
+
+            $rent = true;
+        }
+
+        /*
+         * -----------------------
+         * Price
+         * -----------------------
+         */
+
+        $price = floatval($row->property_price);
+
+        $price_display = CURRENCY . number_format($price);
+
+        if ($rent) {
+            $price_display .= '/Month';
+        }
+
+        /*
+         * -----------------------
+         * Amenities
+         * -----------------------
+         */
+
+        $propertyAmenities = [];
+
+        if (!empty($row->property_amenities)) {
+            $ids = explode(',', $row->property_amenities);
+
+            foreach ($ids as $id) {
+                $id = trim($id);
+
+                if (isset($amenities[$id])) {
+                    $propertyAmenities[] = $amenities[$id];
+                }
+            }
+        }
+
+        /*
+         * -----------------------
+         * Beds Bath
+         * -----------------------
+         */
+
+        $beds = 0;
+
+        $baths = 0;
+
+        if (!empty($row->property_attribute)) {
+            $json = json_decode($row->property_attribute, true);
+
+            if (is_array($json)) {
+                foreach ($json as $a) {
+                    if ($a['field_id'] == 3) {
+                        $beds = intval($a['field_type_value']);
+                    }
+
+                    if ($a['field_id'] == 13) {
+                        $baths = intval($a['field_type_value']);
+                    }
+                }
+            }
+        }
+
+        /*
+         * -----------------------
+         * Size
+         * -----------------------
+         */
+
+        $size = '';
+
+        if ($row->size != '' && $row->size != '0') {
+            $unit = !empty($row->measurement)
+                ? $row->measurement
+                : 'sq.ft';
+
+            $size = $row->size . ' ' . $unit;
+        }
+
+        /*
+         * -----------------------
+         * Featured Image
+         * -----------------------
+         */
+
+        if (!empty($row->property_image) &&
+                file_exists(__DIR__ . '/../uploads/' . $row->property_image)) {
+            $image = 'uploads/' . $row->property_image;
+        } else {
+            $image = $fallback_images[$row->id % count($fallback_images)];
+        }
+
+        /*
+         * -----------------------
+         * Gallery
+         * -----------------------
+         */
+
+        $gallery = [];
+
+        if (!empty($row->gallery)) {
+            $g = json_decode($row->gallery, true);
+
+            if (is_array($g)) {
+                foreach ($g as $img) {
+                    if (file_exists(__DIR__ . '/../uploads/' . $img)) {
+                        $gallery[] = 'uploads/' . $img;
+                    }
+                }
+            }
+        }
+
+        if (empty($gallery)) {
+            $gallery[] = $image;
+        }
+
+        /*
+         * -----------------------
+         * Title
+         * -----------------------
+         */
+
+        $title = trim($row->property_title);
+
+        if (empty($title)) {
+            $title = $category . ' Property';
+        }
+
+        /*
+         * -----------------------
+         * Description
+         * -----------------------
+         */
+
+        $description = '';
+
+        if (!empty($row->property_description)) {
+            $description = strip_tags($row->property_description);
+        }
+
+        /*
+         * -----------------------
+         * Final Array
+         * -----------------------
+         */
+
+        $properties[$row->id] = [
+            'id' => $row->id,
+            'title' => $title,
+            'location' => $location,
+            'price' => number_format($price),
+            'price_display' => $price_display,
+            'category' => !empty($row->property_type) ? strtolower($row->property_type) : '',
+            'type' => strtoupper($category),
+            'badge' => $badge,
+            'beds' => $beds,
+            'baths' => $baths,
+            'size' => $size,
+            'featured_image' => $image,
+            'gallery' => $gallery,
+            'description' => $description,
+            'amenities' => $propertyAmenities,
+            'agent' => !empty($row->uploader)
+                ? $row->uploader
+                : 'VillaCare Kenya',
+            'posted' => date(
+                'M d, Y',
+                strtotime($row->created_at)
+            )
+        ];
+    }
+}
+
 ?>

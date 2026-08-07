@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <rewrite>
+            <rules>
+                <!-- Handle /en/ root -> index.php -->
+                <rule name="EN Root" stopProcessing="true">
+                    <match url="^en/?$" />
+                    <action type="Rewrite" url="index.php" />
+                </rule>
+                
+                <!-- Handle /en/about/ -> about.php -->
+                <rule name="EN Pages" stopProcessing="true">
+                    <match url="^en/([^/]+)/?$" />
+                    <conditions>
+                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                        <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                    </conditions>
+                    <action type="Rewrite" url="{R:1}.php" />
+                </rule>
+
+                <!-- Handle /about/ -> about.php (Without EN) -->
+                <rule name="Standard Pages" stopProcessing="true">
+                    <match url="^([^/]+)/?$" />
+                    <conditions>
+                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                        <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                    </conditions>
+                    <action type="Rewrite" url="{R:1}.php" />
+                </rule>
+            </rules>
+        </rewrite>
+    </system.webServer>
+</configuration>

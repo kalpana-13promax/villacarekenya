@@ -1,7 +1,32 @@
-<?php 
+<?php
+require_once ('includes/config.php');
 include 'config/properties.php';
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
-$property = isset($properties[$id]) ? $properties[$id] : $properties[1];
+$id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$property = null;
+if ($id > 0 && isset($properties[$id])) {
+  $property = $properties[$id];
+} else if (!empty($properties)) {
+  $property = reset($properties);
+}
+if (!$property) {
+  // Ultimate fallback to avoid PHP crash
+  $property = [
+    'title' => 'Luxury Villa',
+    'description' => 'Beautiful premium property details.',
+    'location' => 'Kilimani, Nairobi',
+    'type' => 'APARTMENT',
+    'badge' => 'FOR SALE',
+    'beds' => 3,
+    'baths' => 3,
+    'size' => '150 sq.m',
+    'featured_image' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
+    'gallery' => ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop'],
+    'price_display' => 'Ksh.12,000,000',
+    'posted' => 'Recently',
+    'amenities' => ['Parking', 'Water', 'Electricity'],
+    'agent' => 'VillaCare Kenya'
+  ];
+}
 
 // SEO meta for this property
 $meta_title = $property['title'] . ' | VillaCare Kenya';
@@ -160,7 +185,50 @@ $og_image = !empty($property['gallery'][0]) ? $property['gallery'][0] : $propert
 
 </div>
 
-<!-- ===== SIMILAR PROPERTIES SECTION ===== -->
+<!-- ===== SIMILAR PROPERTIES SECTION (Dynamic from DB) ===== -->
+<?php
+// Find similar properties: same type or same location, excluding current
+$similar_properties = [];
+$current_type = strtolower($property['type']);
+$current_location = strtolower($property['location']);
+$current_id = $id;
+
+// First pass: same type
+foreach ($properties as $pid => $sp) {
+  if ($pid == $current_id)
+    continue;
+  if (strtolower($sp['type']) === $current_type) {
+    $similar_properties[$pid] = $sp;
+  }
+  if (count($similar_properties) >= 3)
+    break;
+}
+
+// Second pass: same location (if we need more)
+if (count($similar_properties) < 3) {
+  foreach ($properties as $pid => $sp) {
+    if ($pid == $current_id || isset($similar_properties[$pid]))
+      continue;
+    if (stripos($sp['location'], explode(',', $current_location)[0]) !== false) {
+      $similar_properties[$pid] = $sp;
+    }
+    if (count($similar_properties) >= 3)
+      break;
+  }
+}
+
+// Third pass: any remaining properties to fill up to 3
+if (count($similar_properties) < 3) {
+  foreach ($properties as $pid => $sp) {
+    if ($pid == $current_id || isset($similar_properties[$pid]))
+      continue;
+    $similar_properties[$pid] = $sp;
+    if (count($similar_properties) >= 3)
+      break;
+  }
+}
+?>
+
 <div class="similar-properties-section">
 
   <div class="similar-header" data-aos="fade-up">
@@ -169,73 +237,34 @@ $og_image = !empty($property['gallery'][0]) ? $property['gallery'][0] : $propert
   </div>
 
   <div class="row g-4">
-    
-    <!-- Similar Property 1 -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+    <?php
+    $sim_delay = 100;
+    foreach ($similar_properties as $sim_id => $sim):
+      ?>
+    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="<?php echo $sim_delay; ?>">
       <div class="similar-card">
         <div class="similar-image">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop" alt="Property">
-          <div class="similar-badge">FOR RENT</div>
-          <div class="similar-price">Ksh.95,000/mo</div>
+          <img src="<?php echo htmlspecialchars($sim['featured_image']); ?>" alt="<?php echo htmlspecialchars($sim['title']); ?>">
+          <div class="similar-badge"><?php echo htmlspecialchars($sim['badge']); ?></div>
+          <div class="similar-price"><?php echo htmlspecialchars($sim['price_display']); ?></div>
         </div>
         <div class="similar-content">
-          <h3>2 Bedroom Apartment</h3>
+          <h3><?php echo htmlspecialchars($sim['title']); ?></h3>
           <div class="similar-location">
-            <i class="bi bi-geo-alt-fill"></i> Kilimani, Nairobi
+            <i class="bi bi-geo-alt-fill"></i> <?php echo htmlspecialchars($sim['location']); ?>
           </div>
           <div class="similar-meta">
-            <div><i class="bi bi-door-open"></i> 2 Beds</div>
-            <div><i class="bi bi-droplet"></i> 2 Baths</div>
+            <div><i class="bi bi-door-open"></i> <?php echo htmlspecialchars($sim['beds']); ?> Beds</div>
+            <div><i class="bi bi-droplet"></i> <?php echo htmlspecialchars($sim['baths']); ?> Baths</div>
           </div>
-          <a href="property-details.php?id=1" class="similar-link">View Details <i class="bi bi-arrow-right"></i></a>
+          <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $sim['id']; ?>" class="similar-link">View Details <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
     </div>
-
-    <!-- Similar Property 2 -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-      <div class="similar-card">
-        <div class="similar-image">
-          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=600&auto=format&fit=crop" alt="Property">
-          <div class="similar-badge">FOR RENT</div>
-          <div class="similar-price">Ksh.120,000/mo</div>
-        </div>
-        <div class="similar-content">
-          <h3>3 Bedroom Apartment</h3>
-          <div class="similar-location">
-            <i class="bi bi-geo-alt-fill"></i> Kileleshwa, Nairobi
-          </div>
-          <div class="similar-meta">
-            <div><i class="bi bi-door-open"></i> 3 Beds</div>
-            <div><i class="bi bi-droplet"></i> 2 Baths</div>
-          </div>
-          <a href="property-details.php?id=2" class="similar-link">View Details <i class="bi bi-arrow-right"></i></a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Similar Property 3 -->
-    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-      <div class="similar-card">
-        <div class="similar-image">
-          <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=600&auto=format&fit=crop" alt="Property">
-          <div class="similar-badge">FOR SALE</div>
-          <div class="similar-price">Ksh.18.5M</div>
-        </div>
-        <div class="similar-content">
-          <h3>4 Bedroom Villa</h3>
-          <div class="similar-location">
-            <i class="bi bi-geo-alt-fill"></i> Karen, Nairobi
-          </div>
-          <div class="similar-meta">
-            <div><i class="bi bi-door-open"></i> 4 Beds</div>
-            <div><i class="bi bi-droplet"></i> 3 Baths</div>
-          </div>
-          <a href="property-details.php?id=3" class="similar-link">View Details <i class="bi bi-arrow-right"></i></a>
-        </div>
-      </div>
-    </div>
-
+    <?php
+      $sim_delay += 100;
+    endforeach;
+    ?>
   </div>
 
   <!-- View All Button -->

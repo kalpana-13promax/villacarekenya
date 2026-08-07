@@ -1,0 +1,438 @@
+<?php
+
+class itways extends db
+{
+	
+	function login ()
+	{
+		$data = $this->mysqli->query("SELECT * FROM user where username = '$_POST[username]' and password = '$_POST[password]' and status='active' "); 
+		if( $data->num_rows )
+		{
+			$data_obj = $data->fetch_object(); 
+			session_start();
+			$_SESSION['admin'] = $data_obj->id;
+			$id_ll = $_SESSION['admin'];
+			$username = $data_obj->username;
+
+		//-------------- ip --------------------------------
+            
+      $ip =   $_SERVER['REMOTE_ADDR'];
+          
+  		$json     = file_get_contents("https://ipwhois.app/json/$ip");
+			$json     = json_decode($json, true);
+ 			$country_name  = $json['country'];
+ 			$country_code  = $json['country_code'];
+ 			 $country  =   $country_name ." [". $country_code . "]";
+ 			$country_flag  = $json['country_flag'];
+			 $region   = $json['region'];
+			 $city     = $json['city'];
+		 	$lat  =   $json['latitude'];
+		 	$lon  =   $json['longitude'];
+			 $location   = $lat .",".$lon;
+			 $isp    =   $json['isp'];
+
+
+ 
+ //------------------------browser os--------------------------
+
+function getBrowser() { 
+  $u_agent = $_SERVER['HTTP_USER_AGENT'];
+  $bname = 'Unknown';
+  $platform = 'Unknown';
+  $version= "";
+
+  //First get the platform?
+  if (preg_match('/linux/i', $u_agent)) {
+    $platform = 'linux';
+  }elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
+    $platform = 'mac';
+  }elseif (preg_match('/windows|win32/i', $u_agent)) {
+    $platform = 'windows';
+  }
+
+  // Next get the name of the useragent yes seperately and for good reason
+  if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)){
+    $bname = 'Internet Explorer';
+    $ub = "MSIE";
+  }elseif(preg_match('/Firefox/i',$u_agent)){
+    $bname = 'Mozilla Firefox';
+    $ub = "Firefox";
+  }elseif(preg_match('/OPR/i',$u_agent)){
+    $bname = 'Opera';
+    $ub = "Opera";
+  }elseif(preg_match('/Chrome/i',$u_agent) && !preg_match('/Edge/i',$u_agent)){
+    $bname = 'Google Chrome';
+    $ub = "Chrome";
+  }elseif(preg_match('/Safari/i',$u_agent) && !preg_match('/Edge/i',$u_agent)){
+    $bname = 'Apple Safari';
+    $ub = "Safari";
+  }elseif(preg_match('/Netscape/i',$u_agent)){
+    $bname = 'Netscape';
+    $ub = "Netscape";
+  }elseif(preg_match('/Edge/i',$u_agent)){
+    $bname = 'Edge';
+    $ub = "Edge";
+  }elseif(preg_match('/Trident/i',$u_agent)){
+    $bname = 'Internet Explorer';
+    $ub = "MSIE";
+  }
+
+  // finally get the correct version number
+  $known = array('Version', $ub, 'other');
+  $pattern = '#(?<browser>' . join('|', $known) .
+')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+  if (!preg_match_all($pattern, $u_agent, $matches)) {
+    // we have no matching number just continue
+  }
+  // see how many we have
+  $i = count($matches['browser']);
+  if ($i != 1) {
+    //we will have two since we are not using 'other' argument yet
+    //see if version is before or after the name
+    if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
+        $version= $matches['version'][0];
+    }else {
+        $version= $matches['version'][1];
+    }
+  }else {
+    $version= $matches['version'][0];
+  }
+
+  // check if we have a number
+  if ($version==null || $version=="") {$version="?";}
+
+  return array(
+    'userAgent' => $u_agent,
+    'name'      => $bname,
+    'version'   => $version,
+    'platform'  => $platform,
+    'pattern'    => $pattern
+  );
+} 
+
+// now try it
+$ua=getBrowser();
+ $browser = $ua['name'] . ", Ver: " . $ua['version'];
+ $os =   $ua['platform'];
+
+ //------------------------/browser 0s-------------------------
+//die;
+date_default_timezone_set('Asia/Kolkata');
+
+          $ctime =   date('Y-m-d H:i:s');
+    
+     
+
+         $sql =  $this->mysqli->query("INSERT INTO login_history (userid, username, login_date_time, os, browser, ip, host, country, state, city, loc, postal) 
+        values
+        ('$id_ll', '$username', '$ctime', '$os', '$browser', '$ip', '$isp', '$country', '$region', '$city', '$location', '$country_flag')"); 
+        
+        	$last_login = $this->mysqli->query("Update user 
+           Set last_login = NOW() 
+           Where id = $id_ll
+           ") ;
+        
+        
+			header("location: dashboard.php");
+			
+			die;
+		}
+		else
+		{
+			session_start();
+			$_SESSION['msg'] = 'incorrect username or password';
+			header("location: index.php");
+			die;
+		}
+	}
+	
+	function userdata ()
+	{
+		@session_start();
+		$user=@$_SESSION['admin'];
+		if($user)
+		{
+		$data = $this->mysqli->query("SELECT * FROM user where id = $user "); 
+		if( $data->num_rows )
+		{
+			return $data->fetch_object(); 
+		}else{
+			$obj = new itways();
+			$obj->logout ();
+				}
+	}
+	}
+	
+	
+	
+	/* ----------------------------- sanitizing data -------------------------- */
+
+	function int($data){
+	    $data = filter_var($data, FILTER_SANITIZE_NUMBER_INT);
+	    return $data;
+	    }
+		
+	
+		function sanitize($data) {
+			$data = filter_var($data, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$data = trim($data);
+			$data = stripslashes($data);
+			$san = mysqli_real_escape_string($data);
+			//  $data = htmlspecialchars($data);
+			return $san;
+				}
+			
+			
+
+				/*------------------------------ Indian Currency ---------------------- */
+
+				function price($num) {
+					$explrestunits = "" ;
+					if(strlen($num)>3) {
+						$lastthree = substr($num, strlen($num)-3, strlen($num));
+						$restunits = substr($num, 0, strlen($num)-3); // extracts the last three digits
+						$restunits = (strlen($restunits)%2 == 1)?"0".$restunits:$restunits; 
+						// explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
+						$expunit = str_split($restunits, 2);
+						for($i=0; $i<sizeof($expunit); $i++) {
+							// creates each of the 2's group and adds a comma to the end
+							if($i==0) {
+								$explrestunits .= (int)$expunit[$i].","; // if is first value , convert into integer
+							} else {
+								$explrestunits .= $expunit[$i].",";
+							}
+						}
+						$thecash = $explrestunits.$lastthree;
+					} else {
+						$thecash = $num;
+					}
+					$price = CURRENCY . " " . $thecash;
+					return $price; // writes the final format where $currency is the currency symbol.
+				}
+
+				/* ----------------------  // Indian Currency ------------------ */
+
+
+
+
+
+	
+	function getQuery ($sql ){
+
+		$data = $this->mysqli->query($sql); 
+		if( $data->num_rows == '1' ){
+			$row[] = $data->fetch_object(); 
+		}else{
+			while ( $r = $data->fetch_object() ){
+				$row[] = $r;
+			}
+		}
+		return @$row;
+	}
+    
+	function get ($table ){
+
+		$data = $this->mysqli->query("SELECT * FROM $table order by id desc "); 
+		if( $data->num_rows == '1' ){
+			$row[] = $data->fetch_object(); 
+		}else{
+			while ( $r = $data->fetch_object() ){
+				$row[] = $r;
+			}
+		}
+		return @$row;
+	}
+	function getid ($table, $id ){
+
+		$data = $this->mysqli->query("SELECT * FROM $table where id = $id "); 
+		if( $data->num_rows == '1' ){
+			$row[] = $data->fetch_object(); 
+		}else{
+			while ( $r = $data->fetch_object() ){
+				$row[] = $r;
+			}
+		}
+		return @$row;
+	}
+	function getwhere ($table, $where ){
+//echo ("SELECT * FROM $table where $where ");
+//die;
+		$data = $this->mysqli->query("SELECT * FROM $table where $where "); 
+		if( $data->num_rows == '1' ){
+			$row[] = $data->fetch_object(); 
+		}else{
+			while ( $r = $data->fetch_object() ){
+				$row[] = $r;
+			}
+		}
+		return @$row;
+	}
+	function delete ($table, $where, $location ){
+		//echo "delete FROM $table where $where ";
+		//die;
+		$data = $this->mysqli->query("delete FROM $table where $where "); 
+		if( $data ){
+			$_SESSION['suc'] = $_GET['source'] . ' deleted successfully';
+
+		}else{
+			$_SESSION['fal'] = 'Opps! not deleted';
+
+		}
+			header("location: $location");
+			die;
+	}
+
+	function count_months($date1, $date2){
+		$d1 = strtotime($date1);
+$d2 = strtotime($date2);
+
+$totalSecondsDiff = abs($d1-$d2); //42600225
+//$totalMinutesDiff = $totalSecondsDiff/60; //710003.75
+//$totalHoursDiff   = $totalSecondsDiff/60/60;//11833.39
+//$totalDaysDiff    = $totalSecondsDiff/60/60/24; //493.05
+$totalMonthsDiff  = $totalSecondsDiff/60/60/24/30; //16.43
+//$totalYearsDiff   = $totalSecondsDiff/60/60/24/365; //1.35
+
+return $totalMonthsDiff;
+	}
+
+  function count ($sql ){
+	  print_r ($sql);
+	  die;
+		$data = $this->mysqli->query($sql); 
+		$row_count =   $data->num_rows;
+		return $row_count;
+	}
+	
+	function delQuery ($sql ){
+		return $this->mysqli->query($sql); 
+	}
+	
+	function logout (){
+		session_start();
+		session_destroy();
+		header("location: index.php");
+		die;
+	}
+		
+	function check_session(){
+		@session_start();
+		if( $_SESSION['admin'] == '' ){
+			session_destroy();
+			header("location: index.php");
+			die;
+		}
+	}
+	
+	function slider ($page1){
+		$page2 =  basename($_SERVER['PHP_SELF']); 
+		if($page1 == $page2)
+		{
+			echo 'class="nav-active"';
+		}
+	}
+	
+	function message(){
+		if ( @$_SESSION['suc'] ){
+					echo 	'<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<strong>Success </strong> '.$_SESSION['suc'].'
+					</div>';
+		}
+		elseif ( @$_SESSION['fal'] )
+		{
+			echo 	'<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						<strong>Failed </strong> '.$_SESSION['fal'].'
+					</div>';
+		}
+			unset($_SESSION['suc'] );
+			unset($_SESSION['fal'] );
+		
+	}
+	
+    function datetime ()
+    {
+        date_default_timezone_set("Asia/Kolkata");
+       // return $time   =   date("d/m/Y h:i:sa");
+    }
+    
+	function setting ()
+	{
+		$data = $this->mysqli->query("SELECT * FROM settings where id ='1' "); 
+		$data_obj = $data->fetch_object(); 
+			
+			
+		if($_FILES['logo']['name'])
+		{
+			$file_name = explode ('.' , $_FILES['logo']['name']);
+			$file_tmp = $_FILES['logo']['tmp_name'];
+			$random = substr(number_format(time() * rand(),0,'',''),0,4);
+			$logo = $random. '.' .end($file_name);
+			move_uploaded_file( $file_tmp,  "uploads/".$logo );
+			//unlink('uploads/'.$data_obj->logo);
+		}
+		else
+		{
+			$logo = $data_obj->logo;
+		}
+		
+		if($_FILES['video']['name'])
+		{
+			
+			$file_name = explode ('.' , $_FILES['video']['name']);
+			$file_tmp = $_FILES['video']['tmp_name'];
+			$random = substr(number_format(time() * rand(),0,'',''),0,4);
+			$video = $random. '.' .end($file_name);
+			move_uploaded_file( $file_tmp,  "uploads/".$video );
+			//@unlink('uploads/'.$data_obj->video);
+		}
+		else
+		{
+			$video = $data_obj->video;
+		}
+		
+		$data = $this->mysqli->query("UPDATE settings SET
+														name = '$_POST[name]',
+														logo = '$logo',
+														video = '$video'
+														where id = '1'
+									"); 
+		@session_start();
+		if( $data )
+		{
+			$_SESSION['suc'] = 'setting updated successfully';
+		}
+		else
+		{
+			$_SESSION['fal'] = ' not updated';
+		}
+			header("location: setting.php");
+			die;
+	}
+		
+}
+
+
+if(isset($_POST['login']))
+{
+	$obj = new itways();
+	$obj->login ();
+}
+
+if(isset( $_GET['act'] )== 'logout' ) 
+{
+	$obj = new itways();
+	$obj->logout ();
+}
+
+
+
+if(isset($_POST['setting-add']))
+{
+	$obj = new itways();
+	$obj->setting ();
+}
+
+
+?>

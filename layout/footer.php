@@ -25,10 +25,10 @@
             <div class="col-lg-2 col-md-6">
                 <h5 class="footer-title">COMPANY</h5>
                 <ul class="footer-links">
-                    <li><a href="about.php">About Us</a></li>
-                    <li><a href="services.php">Our Services</a></li>
-                    <li><a href="blog.php">Blog</a></li>
-                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>about/">About Us</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>services/">Our Services</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>blog/">Blog</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>contact/">Contact</a></li>
                     <li><a href="#">Privacy Policy</a></li>
                 </ul>
             </div>
@@ -37,11 +37,11 @@
             <div class="col-lg-3 col-md-6">
                 <h5 class="footer-title">EXPLORE</h5>
                 <ul class="footer-links">
-                    <li><a href="for-sale.php?category=luxury">Luxury Villas</a></li>
-                    <li><a href="for-sale.php?type=apartment">Apartments for Sale</a></li>
-                    <li><a href="for-rent.php">Property to Let</a></li>
-                    <li><a href="for-sale.php?feature=beachfront">Beachfront Homes</a></li>
-                    <li><a href="property.php?type=investment">Investment Projects</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>for-sale/?category=luxury">Luxury Villas</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>for-sale/?type=apartment">Apartments for Sale</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>for-rent/">Property to Let</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>for-sale/?feature=beachfront">Beachfront Homes</a></li>
+                    <li><a href="<?php echo DOMAIN; ?>property/?type=investment">Investment Projects</a></li>
                 </ul>
             </div>
 

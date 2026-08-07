@@ -1,0 +1,10 @@
+# --- Custom 404 page ---
+#ErrorDocument 404 https://crm.villacarekenya.com/crm/admin/
+
+Options +FollowSymLinks -MultiViews
+RewriteEngine On
+
+
+# --- Remove .php extension (optional) ---
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^.]+?)/?$ $1.php [L]

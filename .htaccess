@@ -1,0 +1,44 @@
+Options -Indexes
+Options +FollowSymLinks
+
+RewriteEngine On
+RewriteBase /en/
+
+# Do not apply rules to existing files and directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 1. Externally redirect .php requests to the clean URL (with trailing slash)
+RewriteCond %{THE_REQUEST} \s/en/([^.]+)\.php[\s?] [NC]
+RewriteRule ^ %1/ [R=301,L]
+
+# 2. Add trailing slash if not present and no extension
+RewriteCond %{REQUEST_URI} !/$
+RewriteCond %{REQUEST_URI} !\.
+RewriteRule ^(.*)$ $1/ [R=301,L]
+
+# 3. Internally map the clean URL (with trailing slash) to the .php file
+RewriteCond %{DOCUMENT_ROOT}/en/$1.php -f
+RewriteRule ^(.*)/$ $1.php [L]
+
+# 4. Fallback for clean URL without trailing slash (just in case)
+RewriteCond %{DOCUMENT_ROOT}/en/$1.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+ErrorDocument 404 /en/404.php
+
+# Property details
+RewriteRule ^property/([^/]+)/?$ property-details.php?slug=$1 [QSA,L]
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+<FilesMatch "(^\.htaccess|config\.php|\.bak|\.sql|\.log|database\.php)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
