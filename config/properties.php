@@ -2,16 +2,10 @@
 
 $properties = [];
 
-$fallback_images = [
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop'
-];
+
 
 if (!isset($boj)) {
-    require_once (__DIR__ . '/../includes/config.php');
+    require_once(__DIR__ . '/../includes/config.php');
 }
 
 /*
@@ -49,7 +43,9 @@ pt.type as property_type_name,
 
 c.city as city_name,
 
-l.location as location_name
+l.location as location_name,
+
+s.slug as slug
 
 FROM property_listing p
 
@@ -61,6 +57,9 @@ ON c.id=p.city
 
 LEFT JOIN locations l
 ON l.id=p.location
+
+LEFT JOIN seo_data s
+ON s.related_id=p.id AND s.type='property'
 
 WHERE p.status!='7'
 
@@ -104,8 +103,10 @@ if ($data) {
 
         $rent = false;
 
-        if (stripos($row->available_for, 'rent') !== false ||
-                stripos($row->available_for, 'lease') !== false) {
+        if (
+            stripos($row->available_for, 'rent') !== false ||
+            stripos($row->available_for, 'lease') !== false
+        ) {
             $badge = 'FOR RENT';
 
             $rent = true;
@@ -152,7 +153,6 @@ if ($data) {
          */
 
         $beds = 0;
-
         $baths = 0;
 
         if (!empty($row->property_attribute)) {
@@ -193,11 +193,10 @@ if ($data) {
          * -----------------------
          */
 
-        if (!empty($row->property_image) &&
-                file_exists(__DIR__ . '/../uploads/' . $row->property_image)) {
-            $image = 'uploads/' . $row->property_image;
+        if (!empty($row->property_image)) {
+            $image = 'https://crm.villacarekenya.com/crm/uploads/' . $row->property_image;
         } else {
-            $image = $fallback_images[$row->id % count($fallback_images)];
+            $image = DOMAIN . 'assets/images/default.jpg';
         }
 
         /*
@@ -213,8 +212,8 @@ if ($data) {
 
             if (is_array($g)) {
                 foreach ($g as $img) {
-                    if (file_exists(__DIR__ . '/../uploads/' . $img)) {
-                        $gallery[] = 'uploads/' . $img;
+                    if (!empty($img)) {
+                        $gallery[] = 'https://crm.villacarekenya.com/crm/uploads/' . $img;
                     }
                 }
             }
@@ -256,6 +255,7 @@ if ($data) {
 
         $properties[$row->id] = [
             'id' => $row->id,
+            'slug' => !empty($row->slug) ? $row->slug : $row->id,
             'title' => $title,
             'location' => $location,
             'price' => number_format($price),
@@ -280,5 +280,3 @@ if ($data) {
         ];
     }
 }
-
-?>

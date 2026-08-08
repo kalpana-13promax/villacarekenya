@@ -131,9 +131,11 @@ $default_img = DOMAIN . 'assets/images/default.jpg';
         }
 
         .vc-blog-image img {
-            width: 100%;
-            height: 400px;
+            max-width: 100%;
+            /* height: auto; */
+            object-fit: cover;
             display: block;
+            margin: 0 auto;
         }
 
         /* Blog Content */
@@ -294,8 +296,8 @@ $default_img = DOMAIN . 'assets/images/default.jpg';
         <!-- Blog Card -->
         <?php if ($blog_post): 
             $blog_img = '';
-            if (!empty($blog_post->pro_image) && file_exists(__DIR__ . '/uploads/' . $blog_post->pro_image)) {
-                $blog_img = DOMAIN . 'uploads/' . $blog_post->pro_image;
+            if (!empty($blog_post->pro_image)) {
+                $blog_img = 'https://crm.villacarekenya.com/crm/uploads/' . $blog_post->pro_image;
             } else {
                 $blog_img = $default_img;
             }

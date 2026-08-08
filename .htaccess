@@ -1,5 +1,6 @@
 Options -Indexes
 Options +FollowSymLinks
+Options -MultiViews
 
 RewriteEngine On
 RewriteBase /en/
@@ -8,6 +9,9 @@ RewriteBase /en/
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
+
+# Property details (Specific rule first)
+RewriteRule ^property/([^/]+)/?$ property-details.php?slug=$1 [QSA,L]
 
 # 1. Externally redirect .php requests to the clean URL (with trailing slash)
 RewriteCond %{THE_REQUEST} \s/en/([^.]+)\.php[\s?] [NC]
@@ -27,9 +31,6 @@ RewriteCond %{DOCUMENT_ROOT}/en/$1.php -f
 RewriteRule ^(.*)$ $1.php [L]
 
 ErrorDocument 404 /en/404.php
-
-# Property details
-RewriteRule ^property/([^/]+)/?$ property-details.php?slug=$1 [QSA,L]
 
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options "nosniff"

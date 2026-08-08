@@ -1,103 +1,12 @@
 <?php
 require_once('includes/config.php');
 
-$db_projects = null;
-try {
-    $database = new db();
-    $db_projects = $database->getQuery("SELECT * FROM project ORDER BY id DESC");
-} catch (Exception $e) {
-    // db failed
-}
+// $database = new db();
+$db_projects = $boj->getQuery("SELECT * FROM project ORDER BY id DESC");
 
-// Fallback static projects
-$fallback_projects = [
-    [
-        'id' => 101,
-        'title' => 'Kitisuru Terraces',
-        'image' => 'assets/images/kitisuru.jpg'
-    ],
-    [
-        'id' => 102,
-        'title' => 'Lenanan Gardens',
-        'image' => 'assets/images/lenanan.jpg'
-    ],
-    [
-        'id' => 103,
-        'title' => 'Oyster Paradise',
-        'image' => 'assets/images/oyster.jpg'
-    ],
-    [
-        'id' => 104,
-        'title' => 'Belcrest Gardens',
-        'image' => 'assets/images/belcrest.jpg'
-    ],
-    [
-        'id' => 105,
-        'title' => 'Malibu Court',
-        'image' => 'assets/images/malibu.jpg'
-    ],
-    [
-        'id' => 106,
-        'title' => 'Villa Maria',
-        'image' => 'assets/images/villa.jpg'
-    ],
-    [
-        'id' => 107,
-        'title' => 'Brooklyn Springs',
-        'image' => 'assets/images/brooklyn.jpg'
-    ],
-    [
-        'id' => 108,
-        'title' => 'The Grand Palace',
-        'image' => 'assets/images/grand.jpg'
-    ]
-];
 
-$projects_to_show = [];
-if (!empty($db_projects)) {
-    foreach ($db_projects as $idx => $proj) {
-        $proj_img = '';
-        if (!empty($proj->pro_image) && file_exists(__DIR__ . '/uploads/' . $proj->pro_image)) {
-            $proj_img = DOMAIN . 'uploads/' . $proj->pro_image;
-        } else {
-            $proj_img = DOMAIN . 'assets/images/default.jpg';
-        }
-        $projects_to_show[] = [
-            'id' => $proj->id,
-            'title' => $proj->pro_name,
-            'image' => $proj_img,
-            'is_db' => true
-        ];
-    }
-}
 
-// Append fallback projects to ensure grid is nicely filled if database has fewer than 8 projects
-$count_needed = 8 - count($projects_to_show);
-if ($count_needed > 0) {
-    $added = 0;
-    foreach ($fallback_projects as $fb) {
-        if ($added >= $count_needed) {
-            break;
-        }
-        // Check if the title is not already present to avoid duplication
-        $exists = false;
-        foreach ($projects_to_show as $p) {
-            if (strcasecmp($p['title'], $fb['title']) === 0) {
-                $exists = true;
-                break;
-            }
-        }
-        if (!$exists) {
-            $projects_to_show[] = [
-                'id' => $fb['id'],
-                'title' => $fb['title'],
-                'image' => $fb['image'],
-                'is_db' => false
-            ];
-            $added++;
-        }
-    }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,11 +27,6 @@ if ($count_needed > 0) {
 <?php include 'layout/link.php'; ?>
 
 <style>
-
-/* body {
-    background: #f8f6f4;
-    font-family: 'Inter', sans-serif;
-} */
 
 /* Section Title */
 .section-title {
@@ -344,18 +248,25 @@ if ($count_needed > 0) {
     <!-- Project Grid -->
     <div class="row g-3">
         
-        <?php foreach ($projects_to_show as $idx => $p): ?>
+        <?php if (!empty($db_projects)): ?>
+        <?php foreach ($db_projects as $idx => $proj): 
+            if (!empty($proj->pro_image)) {
+                $proj_img = 'https://crm.villacarekenya.com/crm/uploads/' . $proj->pro_image;
+            } else {
+                $proj_img = DOMAIN . 'assets/images/default.jpg';
+            }
+        ?>
         <!-- Project <?php echo $idx + 1; ?> -->
         <div class="col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="<?php echo (($idx % 4) + 1) * 100; ?>">
             <div class="project-card">
-                <img src="<?php echo htmlspecialchars($p['image']); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($p['title']); ?>">
+                <img src="<?php echo htmlspecialchars($proj_img); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($proj->pro_name); ?>">
                 <div class="project-overlay">
-                    <div class="project-title"><?php echo htmlspecialchars($p['title']); ?></div>
+                    <div class="project-title"><?php echo htmlspecialchars($proj->pro_name); ?></div>
                 </div>
             </div>
         </div>
         <?php endforeach; ?>
-
+        <?php endif; ?>
     </div>
 
     <!-- View All Button - Smaller -->

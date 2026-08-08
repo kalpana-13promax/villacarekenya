@@ -444,8 +444,8 @@ $default_img = DOMAIN . 'assets/images/default.jpg';
                     if (!empty($testimonials)):
                         foreach ($testimonials as $idx => $t):
                             $client_img = '';
-                            if (!empty($t->pro_image) && file_exists(__DIR__ . '/../uploads/' . $t->pro_image)) {
-                                $client_img = DOMAIN . 'uploads/' . $t->pro_image;
+                            if (!empty($t->pro_image)) {
+                                $client_img = 'https://crm.villacarekenya.com/crm/uploads/' . $t->pro_image;
                             } else {
                                 $client_img = $default_img;
                             }

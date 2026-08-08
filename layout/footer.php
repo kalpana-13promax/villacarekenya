@@ -69,7 +69,9 @@
 
         <div class="row mt-4">
             <div class="col-12 text-center">
-                <p class="small mb-0">&copy; <script>document.write(new Date().getFullYear())</script> Villacare Kenya. All rights reserved.</p>
+                <p class="small mb-0">&copy; <script>
+                        document.write(new Date().getFullYear())
+                    </script> Villacare Kenya. All rights reserved.</p>
             </div>
         </div>
     </div>

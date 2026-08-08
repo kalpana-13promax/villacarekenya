@@ -319,23 +319,7 @@
                                 echo htmlspecialchars(mb_strimwidth($desc1, 0, 160, '...'));
                                 ?>
                             </p>
-                            <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $p1['id']; ?>" class="feature-btn">VIEW DETAILS</a>
-                        </div>
-                    </div>
-                </div>
-                <?php else: ?>
-                <!-- Fallback: Lavington Family Villa -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
-                    <div class="feature-card">
-                        <div class="feature-img">
-                            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80"
-                                alt="Lavington family villa" loading="lazy">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Lavington Family Villa</h3>
-                            <p>Spacious 4-bedroom family villa in Lavington with landscaped garden, secure compound
-                                and contemporary finishes. Ideal for families seeking privacy and convenience.</p>
-                            <a href="property.php" class="feature-btn">VIEW All LIST</a>
+                            <a href="<?php echo DOMAIN; ?>property/<?php echo htmlspecialchars($p1['slug']); ?>/" class="feature-btn">VIEW DETAILS</a>
                         </div>
                     </div>
                 </div>
@@ -376,31 +360,7 @@
                                 echo htmlspecialchars(mb_strimwidth($desc2, 0, 160, '...'));
                                 ?>
                             </p>
-                            <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $p2['id']; ?>" class="feature-btn">VIEW DETAILS</a>
-                        </div>
-                    </div>
-                </div>
-                <?php else: ?>
-                <!-- Fallback: Prime Nairobi Apartments -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="200">
-                    <div class="feature-card">
-                        <div class="feature-img">
-                            <div class="collage-grid">
-                                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80"
-                                    alt="Nairobi apartment interior" loading="lazy">
-                                <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?q=80&w=1200&auto=format&fit=crop"
-                                    alt="modern apartment" loading="lazy">
-                                <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80"
-                                    alt="city skyline" loading="lazy">
-                                <img src="https://images.unsplash.com/photo-1560448204-603b3fc33ddc?q=80&w=1200&auto=format&fit=crop"
-                                    alt="living area" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="feature-content">
-                            <h3>Prime Nairobi Apartments</h3>
-                            <p>Contemporary 2–3 bedroom apartments in Kilimani and Westlands — secure developments
-                                with great rental yield potential and easy access to amenities.</p>
-                            <a href="for-sale.php" class="feature-btn">BROWSE FOR SALE</a>
+                            <a href="<?php echo DOMAIN; ?>property/<?php echo htmlspecialchars($p2['slug']); ?>/" class="feature-btn">VIEW DETAILS</a>
                         </div>
                     </div>
                 </div>
@@ -421,21 +381,7 @@
                                 echo htmlspecialchars(mb_strimwidth($desc3, 0, 160, '...'));
                                 ?>
                             </p>
-                            <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $p3['id']; ?>" class="feature-btn">VIEW DETAILS</a>
-                        </div>
-                    </div>
-                </div>
-                <?php else: ?>
-                <!-- Fallback: original static coastal card -->
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-duration="900" data-aos-delay="300">
-                    <div class="feature-card">
-                        <div class="feature-img">
-                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" alt="Diani beachfront home" loading="lazy">
-                        </div>
-                        <div class="feature-content">
-                            <h3>Coastal Holiday Home — Diani</h3>
-                            <p>Beachfront 3-bedroom duplex in Diani Beach with direct access to the shore — perfect for holiday rentals or a private coastal retreat.</p>
-                            <a href="contact.php?ref=diani" class="feature-btn">ENQUIRE NOW</a>
+                            <a href="<?php echo DOMAIN; ?>property/<?php echo htmlspecialchars($p3['slug']); ?>/" class="feature-btn">VIEW DETAILS</a>
                         </div>
                     </div>
                 </div>

@@ -3190,7 +3190,7 @@
         /* Blog Image */
         .vc-blog-image {
           position: relative;
-          height: 240px;
+          /* height: 240px; */
           overflow: hidden;
         }
 

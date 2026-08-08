@@ -31,6 +31,20 @@ $og_image = isset($properties[1]) ? $properties[1]['featured_image'] : '';
 include 'layout/link.php';
 ?>
     
+<style>
+.plx-text-truncate {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.plx-text-truncate:hover {
+    -webkit-line-clamp: unset;
+}
+</style>
 </head>
 
 <body>
@@ -117,17 +131,17 @@ include 'layout/link.php';
                     <div><span>LOCATION</span> <i class="bi bi-geo-alt me-2" style="color: #d4a85f;"></i> <?php echo htmlspecialchars($property['location']); ?></div>
                 </div>
 
-                <p class="plx-text">
+                <p class="plx-text plx-text-truncate" title="Hover to read more">
                     <?php echo htmlspecialchars($property['description']); ?>
                 </p>
 
                 <?php if ($count % 2 == 0): ?>
                 <div class="mt-3">
-                    <a href="contact.php" class="plx-btn me-3"><i class="bi bi-chat-dots me-2"></i> ENQUIRE</a>
-                    <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $property['id']; ?>" class="plx-btn"><i class="bi bi-eye me-2"></i> VIEW DETAILS</a>
+                    <a href="<?php echo DOMAIN; ?>contact/" class="plx-btn me-3"><i class="bi bi-chat-dots me-2"></i> ENQUIRE</a>
+                    <a href="<?php echo DOMAIN; ?>property/<?php echo htmlspecialchars($property['slug']); ?>/" class="plx-btn"><i class="bi bi-eye me-2"></i> VIEW DETAILS</a>
                 </div>
                 <?php else: ?>
-                <a href="<?php echo DOMAIN; ?>property-details/?id=<?php echo $property['id']; ?>" class="plx-btn"><i class="bi bi-eye me-2"></i> VIEW DETAILS</a>
+                <a href="<?php echo DOMAIN; ?>property/<?php echo htmlspecialchars($property['slug']); ?>/" class="plx-btn"><i class="bi bi-eye me-2"></i> VIEW DETAILS</a>
                 <?php endif; ?>
             </div>
         </div>

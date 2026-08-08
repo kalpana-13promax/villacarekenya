@@ -2,30 +2,24 @@
 require_once ('includes/config.php');
 include 'config/properties.php';
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+$slug = isset($_GET['slug']) ? trim($_GET['slug']) : '';
 $property = null;
-if ($id > 0 && isset($properties[$id])) {
-  $property = $properties[$id];
-} else if (!empty($properties)) {
-  $property = reset($properties);
+
+if ($slug !== '') {
+    foreach ($properties as $p) {
+        if ($p['slug'] === $slug) {
+            $property = $p;
+            break;
+        }
+    }
+} elseif ($id > 0 && isset($properties[$id])) {
+    $property = $properties[$id];
 }
+
 if (!$property) {
-  // Ultimate fallback to avoid PHP crash
-  $property = [
-    'title' => 'Luxury Villa',
-    'description' => 'Beautiful premium property details.',
-    'location' => 'Kilimani, Nairobi',
-    'type' => 'APARTMENT',
-    'badge' => 'FOR SALE',
-    'beds' => 3,
-    'baths' => 3,
-    'size' => '150 sq.m',
-    'featured_image' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
-    'gallery' => ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop'],
-    'price_display' => 'Ksh.12,000,000',
-    'posted' => 'Recently',
-    'amenities' => ['Parking', 'Water', 'Electricity'],
-    'agent' => 'VillaCare Kenya'
-  ];
+    header("HTTP/1.0 404 Not Found");
+    include '404.php';
+    exit;
 }
 
 // SEO meta for this property

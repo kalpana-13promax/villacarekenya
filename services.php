@@ -11,7 +11,7 @@ $fallback_services = [
         'desc' => 'We manage construction projects efficiently to deliver on time, within budget, and as per client requirements.',
         'image' => 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1200&auto=format&fit=crop',
         'icon' => 'bi-building',
-        'link' => 'projects.php#project-management',
+        'link' => 'projects/#project-management',
         'link_text' => 'View Projects'
     ],
     [
@@ -35,7 +35,7 @@ $fallback_services = [
         'desc' => 'Managed rental programmes for corporate clients, expatriates and local tenants — with marketing, bookings and property care included.',
         'image' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
         'icon' => 'bi-house',
-        'link' => 'for-rent.php',
+        'link' => 'for-rent/',
         'link_text' => 'View Rentals'
     ],
     [
@@ -51,7 +51,7 @@ $fallback_services = [
         'desc' => 'Comprehensive conveyancing and transaction support including title searches, contracts and regulatory compliance for Kenyan property transfers.',
         'image' => 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1200&auto=format&fit=crop',
         'icon' => 'bi-briefcase',
-        'link' => 'contact.php',
+        'link' => 'contact/',
         'link_text' => 'Contact Legal Team'
     ]
 ];
@@ -232,7 +232,7 @@ $page_content = [
                         <h3><?php echo htmlspecialchars($s['title']); ?></h3>
                         <p><?php echo htmlspecialchars($s['desc']); ?></p>
                         <?php if (!empty($s['link'])): ?>
-                        <a href="<?php echo htmlspecialchars($s['link']); ?>" class="vc-service-link"><?php echo htmlspecialchars(!empty($s['link_text']) ? $s['link_text'] : 'Learn More'); ?> <i class="bi bi-arrow-right"></i></a>
+                        <a href="<?php echo DOMAIN . htmlspecialchars($s['link']); ?>" class="vc-service-link"><?php echo htmlspecialchars(!empty($s['link_text']) ? $s['link_text'] : 'Learn More'); ?> <i class="bi bi-arrow-right"></i></a>
                         <?php endif; ?>
                     </div>
                 </div>

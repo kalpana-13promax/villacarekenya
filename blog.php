@@ -116,8 +116,8 @@ function build_qs($key, $value, $exclude = []) {
 
                 <?php if ($blogs && count($blogs) > 0):
                     foreach ($blogs as $i => $b):
-                        $image     = !empty($b->pro_image) && file_exists(__DIR__ . '/uploads/' . $b->pro_image)
-                                        ? DOMAIN . 'uploads/' . $b->pro_image
+                        $image     = !empty($b->pro_image) 
+                                        ? 'https://crm.villacarekenya.com/crm/uploads/' . $b->pro_image
                                         : DOMAIN . 'assets/images/default.jpg';
                         $author    = !empty($b->name)  ? $b->name  : 'Admin';
                         $category  = !empty($b->post)  ? $b->post  : 'Blog';
@@ -149,7 +149,7 @@ function build_qs($key, $value, $exclude = []) {
                             <?= htmlspecialchars($excerpt) ?><?= strlen(strip_tags($b->blog)) > 130 ? '…' : '' ?>
                         </p>
 
-                        <a href="blog-details.php?id=<?= (int)$b->id ?>" class="vc-blog-link">
+                        <a href="<?= DOMAIN ?>blog-details/?id=<?= (int)$b->id ?>" class="vc-blog-link">
                             Read More <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
@@ -269,8 +269,8 @@ function build_qs($key, $value, $exclude = []) {
 
                             <?php if ($popular_posts && count($popular_posts) > 0):
                                 foreach ($popular_posts as $pp):
-                                    $pp_img  = !empty($pp->pro_image) && file_exists(__DIR__ . '/uploads/' . $pp->pro_image)
-                                                    ? DOMAIN . 'uploads/' . $pp->pro_image
+                                    $pp_img  = !empty($pp->pro_image) 
+                                                    ? 'https://crm.villacarekenya.com/crm/uploads/' . $pp->pro_image
                                                     : DOMAIN . 'assets/images/default.jpg';
                                     $pp_date = !empty($pp->timestamps) ? date('d M Y', strtotime($pp->timestamps)) : '';
                             ?>
@@ -279,7 +279,7 @@ function build_qs($key, $value, $exclude = []) {
                                     <img src="<?= htmlspecialchars($pp_img) ?>" alt="<?= htmlspecialchars($pp->blog_title) ?>">
                                 </div>
                                 <div class="vc-popular-info">
-                                    <h4><a href="blog-details.php?id=<?= (int)$pp->id ?>"><?= htmlspecialchars($pp->blog_title) ?></a></h4>
+                                    <h4><a href="<?= DOMAIN ?>blog-details/?id=<?= (int)$pp->id ?>"><?= htmlspecialchars($pp->blog_title) ?></a></h4>
                                     <?php if ($pp_date): ?>
                                     <span><i class="bi bi-calendar3"></i> <?= $pp_date ?></span>
                                     <?php endif; ?>
